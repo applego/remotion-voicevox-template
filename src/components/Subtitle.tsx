@@ -1,7 +1,8 @@
 import { useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { loadDefaultJapaneseParser } from "budoux";
 import { useMemo } from "react";
-import { COLORS, CharacterId } from "../config";
+import { CharacterId } from "../config";
+import { SETTINGS } from "../settings.generated";
 
 // BudouXパーサーを初期化（日本語の自然な改行位置を計算）
 const parser = loadDefaultJapaneseParser();
@@ -36,31 +37,40 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, character }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  // 設定から値を取得
+  const { font, subtitle, colors } = SETTINGS;
+
   // フェードインアニメーション
   const opacity = interpolate(frame, [0, fps * 0.15], [0, 1], {
     extrapolateRight: "clamp",
   });
 
-  // キャラクターに応じた色
-  const textColor = character === "zundamon" ? COLORS.zundamon : COLORS.metan;
+  // フォント色の決定
+  const getTextColor = () => {
+    if (font.color === "character") {
+      return character === "zundamon" ? colors.zundamon : colors.metan;
+    }
+    return font.color;
+  };
+  const textColor = getTextColor();
 
   const baseTextStyle: React.CSSProperties = {
-    fontSize: 48,
-    fontWeight: "bold",
+    fontSize: font.size,
+    fontWeight: font.weight as React.CSSProperties["fontWeight"],
     lineHeight: 1.5,
-    fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif",
+    fontFamily: `'${font.family}', 'Hiragino Kaku Gothic ProN', sans-serif`,
   };
 
   return (
     <div
       style={{
         position: "absolute",
-        bottom: 40,
+        bottom: subtitle.bottomOffset,
         left: "50%",
         transform: "translateX(-50%)",
         opacity,
-        width: "55%",
-        maxWidth: 1000,
+        width: `${subtitle.maxWidthPercent}%`,
+        maxWidth: subtitle.maxWidthPixels,
         textAlign: "center",
       }}
     >
@@ -71,7 +81,7 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, character }) => {
           display: "inline-block",
         }}
       >
-        {/* 黒いアウトライン */}
+        {/* 外側アウトライン */}
         <BudouXText
           text={text}
           style={{
@@ -80,11 +90,11 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, character }) => {
             left: 0,
             top: 0,
             color: "transparent",
-            WebkitTextStroke: "14px #000",
+            WebkitTextStroke: `${subtitle.outlineWidth}px ${font.outlineColor}`,
             paintOrder: "stroke fill",
           }}
         />
-        {/* 白いアウトライン */}
+        {/* 内側アウトライン */}
         <BudouXText
           text={text}
           style={{
@@ -93,11 +103,11 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, character }) => {
             left: 0,
             top: 0,
             color: "transparent",
-            WebkitTextStroke: "8px #fff",
+            WebkitTextStroke: `${subtitle.innerOutlineWidth}px ${font.innerOutlineColor}`,
             paintOrder: "stroke fill",
           }}
         />
-        {/* メインテキスト（キャラクター色） */}
+        {/* メインテキスト */}
         <BudouXText
           text={text}
           style={{

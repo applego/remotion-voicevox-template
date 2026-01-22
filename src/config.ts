@@ -37,10 +37,6 @@ export interface CharacterConfig {
   flipX?: boolean; // 画像を左右反転するか
 }
 
-// キャラクター画像を使用するか（falseの場合はプレースホルダー表示）
-// 画像を準備したらtrueに変更してください
-export const USE_CHARACTER_IMAGES = false;
-
 // デフォルトキャラクター設定
 // めたん: 左下、ずんだもん: 右下
 export const DEFAULT_CHARACTERS: CharacterConfig[] = [

@@ -11,6 +11,23 @@
 
 ---
 
+## 重要: 字幕とコンテンツの配置ルール
+
+**字幕はコンテンツに被らないように配置する。コンテンツはできるだけ大きく表示する。**
+
+### コンテンツ表示エリア（1920x1080の場合）
+- 上部余白: 50px
+- 左右余白: 各100px
+- 下部余白: 450px（字幕+キャラクター領域）
+- **実効表示エリア: 1720 x 580px**
+
+### レイアウトの優先順位
+1. コンテンツを最大限大きく表示
+2. 字幕は画面下部に固定（キャラクターと被らない位置）
+3. キャラクターは左右下端に配置
+
+---
+
 ## プロジェクト構成
 
 ```
@@ -125,6 +142,41 @@ durationInFrames = 音声秒数 × 30fps × 1.2playbackRate
 | `npm start` | プレビュー（http://localhost:3000） |
 | `npm run voices` | 音声一括生成 |
 | `npm run build` | 動画出力（out/video.mp4） |
+| `npm run sync-settings` | YAML設定を反映 |
+
+---
+
+## video-settings.yaml（スタイル設定）
+
+動画のスタイルは `video-settings.yaml` で設定：
+
+```yaml
+# フォント設定
+font:
+  family: "Noto Sans JP"      # フォント名
+  size: 48                     # フォントサイズ
+  weight: "bold"               # 太さ
+  color: "character"           # "character" または "#ffffff" など
+  outlineColor: "#000000"      # 外側アウトライン色
+  innerOutlineColor: "#ffffff" # 内側アウトライン色
+
+# 字幕設定
+subtitle:
+  bottomOffset: 40             # 画面下からの距離
+  maxWidthPercent: 55          # 最大幅（%）
+
+# キャラクター設定
+character:
+  height: 367                  # キャラクターの高さ
+  useImages: false             # true: 画像使用, false: プレースホルダー
+
+# カラー設定
+colors:
+  zundamon: "#059669"          # ずんだもん色
+  metan: "#db2777"             # めたん色
+```
+
+設定変更後は `npm start` で自動反映される。
 
 ---
 

@@ -32,6 +32,23 @@ https://github.com/nyanko3141592/remotion-voicevox-template/blob/master/SKILL.md
 
 ---
 
+## 重要: 字幕とコンテンツの配置ルール
+
+**字幕はコンテンツに被らないように配置します。コンテンツはできるだけ大きく表示します。**
+
+### コンテンツ表示エリア（1920x1080の場合）
+- 上部余白: 50px
+- 左右余白: 各100px
+- 下部余白: 450px（字幕+キャラクター領域）
+- **実効表示エリア: 1720 x 580px**
+
+### レイアウトの優先順位
+1. コンテンツを最大限大きく表示
+2. 字幕は画面下部に固定（キャラクターと被らない位置）
+3. キャラクターは左右下端に配置
+
+---
+
 ## このテンプレートでできること
 
 - ずんだもん（右下）とめたん（左下）の掛け合い動画
@@ -493,6 +510,58 @@ export const scenes: SceneInfo[] = [
 | `npm start` | プレビューサーバー起動（http://localhost:3000） |
 | `npm run voices` | 音声生成（VOICEVOX起動必須） |
 | `npm run build` | 動画出力（out/video.mp4） |
+| `npm run sync-settings` | YAML設定を反映（通常は自動実行） |
+
+---
+
+## video-settings.yaml（スタイル設定）
+
+動画のスタイルは `video-settings.yaml` で簡単にカスタマイズできます。
+
+### 設定例
+
+```yaml
+# フォント設定
+font:
+  family: "Noto Sans JP"      # フォント名
+  size: 48                     # フォントサイズ（ピクセル）
+  weight: "bold"               # 太さ（normal, bold, 100-900）
+  color: "character"           # "character"=キャラクター色、または "#ffffff" など
+  outlineColor: "#000000"      # 外側アウトライン（黒）
+  innerOutlineColor: "#ffffff" # 内側アウトライン（白）
+
+# 字幕設定
+subtitle:
+  bottomOffset: 40             # 画面下からの距離（ピクセル）
+  maxWidthPercent: 55          # 最大幅（パーセント）
+  maxWidthPixels: 1000         # 最大幅（ピクセル上限）
+  outlineWidth: 14             # 外側アウトラインの太さ
+  innerOutlineWidth: 8         # 内側アウトラインの太さ
+
+# キャラクター設定
+character:
+  height: 367                  # キャラクターの高さ（ピクセル）
+  useImages: false             # true: 画像使用, false: プレースホルダー
+
+# カラー設定
+colors:
+  background: "#f8fafc"        # 背景色
+  zundamon: "#059669"          # ずんだもん色（緑）
+  metan: "#db2777"             # めたん色（ピンク）
+```
+
+### 設定の反映
+
+`npm start` や `npm run build` を実行すると自動的に設定が反映されます。
+
+### おすすめフォント
+
+| フォント名 | 特徴 |
+|-----------|------|
+| Noto Sans JP | 標準的、読みやすい |
+| M PLUS Rounded 1c | 丸ゴシック、かわいい |
+| Kosugi Maru | 丸ゴシック、親しみやすい |
+| Zen Maru Gothic | 丸ゴシック、やわらかい |
 
 ---
 

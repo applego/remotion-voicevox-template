@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Remotion + VOICEVOX動画テンプレート",
   "scripts": {
-    "start": "remotion studio src/index.ts",
-    "build": "remotion render src/index.ts Main out/video.mp4",
+    "start": "npm run sync-settings && remotion studio src/index.ts",
+    "build": "npm run sync-settings && remotion render src/index.ts Main out/video.mp4",
     "voices": "npx ts-node scripts/generate-voices.ts",
-    "preview": "remotion preview src/index.ts"
+    "preview": "npm run sync-settings && remotion preview src/index.ts",
+    "sync-settings": "npx ts-node scripts/sync-settings.ts"
   },
   "dependencies": {
     "@remotion/bundler": "^4.0.0",
@@ -15,7 +16,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remotion": "^4.0.0",
-    "budoux": "^0.6.2"
+    "budoux": "^0.6.2",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
