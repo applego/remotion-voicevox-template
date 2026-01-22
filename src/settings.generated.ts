@@ -23,9 +23,9 @@ export const SETTINGS = {
     "useImages": false
   },
   "content": {
-    "topPadding": 50,
-    "sidePadding": 100,
-    "bottomPadding": 450
+    "topPadding": 0,
+    "sidePadding": 0,
+    "bottomPadding": 0
   },
   "video": {
     "width": 1920,
