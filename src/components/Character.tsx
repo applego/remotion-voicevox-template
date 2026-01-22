@@ -64,7 +64,6 @@ export const Character: React.FC<CharacterProps> = ({
           style={{
             height: SETTINGS.character.height,
             objectFit: "contain",
-            filter: isSpeaking ? "none" : "brightness(0.7)",
             transform: characterConfig.flipX ? "scaleX(-1)" : "none",
           }}
         />
@@ -81,7 +80,6 @@ export const Character: React.FC<CharacterProps> = ({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            opacity: isSpeaking ? 1 : 0.5,
           }}
         >
           <div style={{ fontSize: 48 }}>
