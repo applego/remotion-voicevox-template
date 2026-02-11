@@ -21,3 +21,19 @@ kuro_zunda:
   position: right
   color: "#333333"
   defaultPauseAfter: 15
+
+announcer:
+  name: No.7アナウンス
+  speakerId: 30
+  position: center
+  color: "#4169E1"  # ロイヤルブルー（知的・信頼感）
+  defaultPauseAfter: 20
+  role: fact-checker
+
+kenzaki:
+  name: 剣崎雌雄
+  speakerId: 21
+  position: left
+  color: "#8B4513"  # サドルブラウン（落ち着いた）
+  defaultPauseAfter: 18
+  role: fact-checker

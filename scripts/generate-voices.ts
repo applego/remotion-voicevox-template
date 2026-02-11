@@ -13,6 +13,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { execSync } from "child_process";
+import YAML from "yaml";
 
 const ROOT_DIR = process.cwd();
 
@@ -37,6 +38,46 @@ interface ScriptLine {
 interface CharacterConfig {
   id: string;
   voicevoxSpeakerId: number;
+}
+
+interface CharacterYamlData {
+  name: string;
+  speakerId: number | null;
+  position: string;
+  color: string;
+  defaultPauseAfter: number;
+  role?: string;
+}
+
+// characters.yamlから動的にキャラクター設定を読み込み
+function loadCharactersFromYaml(): Map<string, number> {
+  const charactersPath = path.join(ROOT_DIR, "config/characters.yaml");
+
+  if (!fs.existsSync(charactersPath)) {
+    console.error(`Characters file not found: ${charactersPath}`);
+    return new Map();
+  }
+
+  try {
+    const yamlContent = fs.readFileSync(charactersPath, "utf-8");
+    const charactersData: Record<string, CharacterYamlData> = YAML.parse(yamlContent);
+
+    const characters = new Map<string, number>();
+
+    for (const [characterId, config] of Object.entries(charactersData)) {
+      if (config.speakerId !== null && typeof config.speakerId === 'number') {
+        characters.set(characterId, config.speakerId);
+        console.log(`Loaded character: ${characterId} (${config.name}) -> Speaker ID: ${config.speakerId}`);
+      } else {
+        console.log(`Skipped character: ${characterId} (${config.name}) -> No VOICEVOX support`);
+      }
+    }
+
+    return characters;
+  } catch (error) {
+    console.error(`Error loading characters.yaml:`, error);
+    return new Map();
+  }
 }
 
 // VOICEVOXが起動しているか確認
@@ -118,17 +159,18 @@ async function main() {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
-  // スクリプトデータを動的に読み込み
-  // Note: 実際の実装ではesbuildなどでビルドしてから読み込む
-  console.log("スクリプトデータを読み込んでいます...");
+  // キャラクター設定を動的に読み込み
+  console.log("characters.yamlからキャラクター設定を読み込んでいます...");
+  const characters: Map<string, number> = loadCharactersFromYaml();
 
-  // ここでは例としてハードコードされたデータを使用
-  // 実際にはscript.tsをパースして使用
+  if (characters.size === 0) {
+    console.error("有効なキャラクターが見つかりません。characters.yamlを確認してください。");
+    process.exit(1);
+  }
+
+  // スクリプトデータを動的に読み込み
+  console.log("スクリプトデータを読み込んでいます...");
   const scriptData: ScriptLine[] = [];
-  const characters: Map<string, number> = new Map([
-    ["zundamon", 3],
-    ["metan", 2],
-  ]);
 
   // script.tsを読み込んでパース
   const scriptContent = fs.readFileSync(SCRIPT_PATH, "utf-8");
