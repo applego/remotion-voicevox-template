@@ -1,0 +1,185 @@
+name: animation-series
+description: "アニメーション風シリーズ動画テンプレート（キャラクター中心）"
+version: 1.0.0
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 90
+  fps: 30
+
+# キャラクター設定（アニメーション特化）
+characters:
+  primary:
+    id: zundamon
+    role: 主人公・ナレーター
+    style: "〜なのだ！〜だっぺ！"
+    personality: "元気で好奇心旺盛、視聴者を引き込む"
+    animation_style: "bouncy"  # 弾むようなアニメーション
+  secondary:
+    id: metan
+    role: サポートキャラ・ツッコミ
+    style: "〜ね〜わ〜かしら？"
+    personality: "冷静でツッコミ上手、的確な質問をする"
+    animation_style: "smooth"  # なめらかなアニメーション
+
+# テーマ・スタイル（アニメーション向け）
+style:
+  theme: animated_world
+  colors:
+    background: "#87CEEB"  # スカイブルー
+    world_bg: "#90EE90"    # ライトグリーン
+    zundamon: "#32CD32"    # ライムグリーン
+    metan: "#FF69B4"       # ホットピンク
+    accent: "#FFD700"      # ゴールド
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 65
+    weight: "800"
+  animation:
+    transition_speed: "medium"
+    character_entrance: "slide_bounce"
+    text_reveal: "typewriter"
+
+# 台本構成（アニメーションシリーズ特化）
+structure:
+  sections:
+    - id: cold_open
+      name: "コールドオープン"
+      duration: 8
+      description: "シリーズの世界観を示す短いシーン"
+      visual: "キャラクターが世界に登場"
+      character_focus: "both"
+
+    - id: title_sequence
+      name: "タイトルシーケンス"
+      duration: 5
+      description: "シリーズタイトルとエピソード情報"
+      visual: "アニメーション付きタイトルカード"
+
+    - id: premise
+      name: "今回の設定・問題提起"
+      duration: 10
+      description: "エピソードの舞台設定と解決すべき課題"
+      example: "今日はずんだもんが新しい冒険に出発するのだ！"
+      character_focus: "primary"
+
+    - id: exploration
+      name: "探索・発見フェーズ"
+      duration: 20
+      description: "キャラクターが世界を探索し、新しいことを学ぶ"
+      character_interaction: true
+      storytelling_pattern: "discovery"
+
+    - id: challenge
+      name: "チャレンジ・問題解決"
+      duration: 15
+      description: "困難に直面し、協力して解決策を見つける"
+      character_focus: "both"
+      emotion: "tension_then_relief"
+
+    - id: learning
+      name: "学びの共有"
+      duration: 12
+      description: "得られた教訓や知識を視聴者と共有"
+      character_focus: "secondary"
+      educational_moment: true
+
+    - id: next_preview
+      name: "次回予告"
+      duration: 8
+      description: "次のエピソードへの期待を高める"
+      visual: "次回の舞台をちらっと見せる"
+
+    - id: outro
+      name: "エンディング"
+      duration: 12
+      description: "シリーズ共通のエンディングとお別れ"
+      visual: "キャラクターたちが手を振る"
+      storytelling:
+        reference: ".agent/skills/storytelling/SKILL.md"
+        patterns:
+          - "継続型: 次回への期待を残す"
+          - "成長実感型: キャラクターの成長を感じさせる"
+          - "温かい型: 視聴者との絆を深める"
+
+# 台本生成プロンプト用ガイドライン（アニメーション特化）
+prompts:
+  tone:
+    - "キャラクター同士の自然な掛け合い"
+    - "子供から大人まで楽しめる内容"
+    - "継続視聴したくなるワクワク感"
+    - "学びがあるが説教臭くない"
+  avoid:
+    - "一方的な説明"
+    - "キャラクターの個性が薄い台詞"
+    - "シリーズ感のない単発的内容"
+    - "複雑すぎる設定や専門用語"
+  include:
+    - "キャラクターの個性を活かした反応"
+    - "視聴者が感情移入できる瞬間"
+    - "次回が気になる要素"
+    - "日常に活かせる学び"
+    - "キャラクター同士の成長"
+  storytelling:
+    reference: ".agent/skills/storytelling/SKILL.md"
+    checklist:
+      - "opening: 世界観を即座に伝える（視覚的インパクト）"
+      - "middle: キャラクター間の自然な会話でテンポ良く進行"
+      - "climax: 協力して問題解決する達成感"
+      - "outro: 継続型で次回への期待感を残す"
+
+# シリーズ設定テンプレート
+series:
+  format: episodic  # エピソード制
+  continuity: light  # ゆるい連続性（単発視聴も可能）
+  character_development: gradual  # 少しずつキャラクター成長
+  world_building: expandable  # 世界観を徐々に拡張
+
+# アニメーション設定
+animation:
+  character_movement:
+    zundamon:
+      idle: "bounce_slight"
+      talking: "mouth_sync_energetic"
+      reaction: "jump_excited"
+    metan:
+      idle: "sway_gentle"
+      talking: "mouth_sync_calm"
+      reaction: "nod_thoughtful"
+  
+  scene_transitions:
+    - "slide_left"
+    - "zoom_in"
+    - "fade_cross"
+    - "iris_in_out"
+  
+  visual_effects:
+    - "sparkle" # 発見・理解の瞬間
+    - "question_mark" # 疑問の表現
+    - "exclamation" # 驚き・発見
+    - "heart" # 温かい気持ち
+
+# シリーズ展開例
+series_examples:
+  themes:
+    - "ずんだもんと学ぶ科学実験"
+    - "めたんの料理チャレンジ"
+    - "二人で探検！歴史の謎"
+    - "日常の不思議を解明しよう"
+  episode_patterns:
+    - "問題発見→調査→実験→結果→次への布石"
+    - "日常の疑問→専門家訪問→体験→学び→応用"
+    - "新しい場所→出会い→学び→冒険→成長"
+
+# 継続視聴促進要素
+engagement:
+  recurring_elements:
+    - "キャラクター専用アイテム・決めポーズ"
+    - "シリーズ通しての小さな成長"
+    - "視聴者参加型の質問・予想"
+    - "次回予告での期待感演出"
+  viewer_connection:
+    - "コメントで感想・予想を募集"
+    - "キャラクターが視聴者を意識した発言"
+    - "シリーズ全体のゴール・目標の共有"
