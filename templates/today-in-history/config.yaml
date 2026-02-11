@@ -1,0 +1,140 @@
+name: today-in-history
+description: "過去の今日のニュースをツッコミ付きで紹介する動画テンプレート"
+version: 1.0.0
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+
+# キャラクター設定
+characters:
+  primary:
+    id: zundamon
+    role: ニュース紹介役
+    style: "〜なのだ！"
+    personality: "元気にニュースを紹介、ツッコミも"
+  secondary:
+    id: metan
+    role: ツッコミ・感想役
+    style: "〜わね、〜かしら？"
+    personality: "鋭いツッコミ、現代視点での感想"
+
+# テーマ・スタイル
+style:
+  theme: news
+  colors:
+    background: "#ffffff"
+    primary: "#2a5a4c"
+    accent: "#ff6b35"
+    zundamon: "#228B22"
+    metan: "#FF1493"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 70
+    weight: "900"
+
+# 台本構成
+structure:
+  sections:
+    - id: opening
+      name: "オープニング"
+      duration: 5
+      description: "今日の日付と導入"
+      example: "今日は〇月〇日！過去のこの日に何があったか見ていくのだ！"
+
+    - id: news_intro
+      name: "ニュース紹介"
+      duration: 8
+      description: "何年前に何があったか"
+      example: "〇年前の今日、△△があったのだ！"
+      visual: "年代・出来事のテロップ"
+
+    - id: detail
+      name: "詳細説明"
+      duration: 15
+      description: "ニュースの詳細"
+      visual: "関連画像・図解"
+
+    - id: tsukkomi
+      name: "ツッコミ"
+      duration: 8
+      description: "めたんのツッコミ・疑問"
+      example: "えっ、それってどういうこと？"
+      emotion: surprised
+
+    - id: explain
+      name: "解説"
+      duration: 12
+      description: "ツッコミへの回答、背景説明"
+      example: "実はこういうことなのだ！"
+
+    - id: lesson
+      name: "学びポイント"
+      duration: 8
+      description: "今に通じる教訓・学び"
+      example: "なるほど、今にも通じる話ね"
+
+    - id: ending
+      name: "エンディング"
+      duration: 5
+      description: "次回予告的なCTA"
+      example: "また明日も見てほしいのだ！"
+
+# ネタ収集設定
+research:
+  sources:
+    - name: "Wikipedia「○月○日」"
+      url: "https://ja.wikipedia.org/wiki/{month}月{day}日"
+      priority: 1
+    - name: "国立国会図書館 デジタルコレクション"
+      priority: 2
+
+  scoring_criteria:
+    - name: "ツッコミ度"
+      description: "ツッコミたくなるか"
+      weight: 3
+    - name: "学び度"
+      description: "学びがあるか"
+      weight: 2
+    - name: "意外性"
+      description: "知られていないか"
+      weight: 2
+    - name: "現代性"
+      description: "今に通じるか"
+      weight: 1
+
+# 台本生成プロンプト用ガイドライン
+prompts:
+  tone:
+    - "バラエティ番組のノリ"
+    - "ツッコミは鋭く、でも愛を持って"
+    - "学びはさりげなく"
+  avoid:
+    - "お堅いニュース読み"
+    - "批判的になりすぎる"
+    - "現代の価値観で過去を裁く"
+  include:
+    - "「えっ!?」と思うポイント"
+    - "当時の背景説明"
+    - "今との比較"
+    - "クスッと笑えるツッコミ"
+
+# サンプルカテゴリ
+categories:
+  weird_inventions:
+    name: "変な発明・製品"
+    description: "今では信じられない発明や製品"
+  social_customs:
+    name: "昔の常識"
+    description: "今とは全く違う常識・習慣"
+  tech_predictions:
+    name: "未来予測"
+    description: "外れた/当たった未来予測"
+  disasters_recovered:
+    name: "災害と復興"
+    description: "災害からの復興ストーリー"
+  unexpected_origins:
+    name: "意外な起源"
+    description: "身近なものの意外な始まり"

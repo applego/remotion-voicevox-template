@@ -2,6 +2,9 @@
 
 ずんだもん＆めたんの掛け合い紹介動画を作成するためのスキルです。
 
+> **Note:** このディレクトリは `hohho_worlds` の **git サブモジュール** です。
+> clone時は `git clone --recurse-submodules` を使用してください。
+
 ## このスキルを使うタイミング
 
 - ユーザーが「紹介動画を作りたい」「解説動画を作りたい」と言った
@@ -408,6 +411,61 @@ colors:
 ```
 
 ユーザーの要望があれば、WebSearchで素材の入手先を調べることもできる。
+
+---
+
+## ⚠️ 重要: script.ts 上書き問題
+
+`npm run build` や `npm run voices` は内部で `npm run sync-script` を実行し、**script.ts が config/script.yaml の内容で上書きされる**。
+
+### 対処法
+
+script.ts を直接編集した場合は、sync を避ける：
+
+```bash
+# ❌ NG: script.ts が上書きされる
+npm run build
+
+# ✅ OK: sync-script をスキップして直接レンダリング
+npx remotion render src/index.ts Main out/video.mp4
+```
+
+---
+
+## Mac での VOICEVOX インストール
+
+### ダウンロード
+
+1. https://voicevox.hiroshiba.jp/ からダウンロード
+2. macOS → CPU版 を選択
+3. `.dmg` を開いてアプリケーションフォルダにドラッグ
+
+### セキュリティ警告の対処
+
+Mac で「マルウェアが含まれている可能性」警告が出る場合：
+
+```bash
+# quarantine 属性を削除
+xattr -cr /Applications/VOICEVOX.app
+
+# 起動
+open /Applications/VOICEVOX.app
+```
+
+---
+
+## 動画の最後の無音を調整
+
+`Root.tsx` にオープニング/エンディング余白が設定されている：
+
+```typescript
+// remotion/src/Root.tsx
+let total = 60; // オープニング余白（2秒）
+...
+total += 60; // エンディング余白（2秒）
+```
+
+短くしたい場合は値を調整する。
 
 ---
 

@@ -44,6 +44,10 @@ export const SETTINGS = {
 
 // キャラクターごとの利用可能な画像ファイル
 export const AVAILABLE_IMAGES: Record<string, string[]> = {
+  "kuro_zunda": [
+    "mouth_close.png",
+    "mouth_open.png"
+  ],
   "metan": [
     "mouth_close.png",
     "mouth_open.png"

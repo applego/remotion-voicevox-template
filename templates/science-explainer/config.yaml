@@ -1,0 +1,101 @@
+name: science-explainer
+description: "科学トピックをわかりやすく解説する動画テンプレート"
+version: 1.0.0
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+
+# キャラクター設定
+characters:
+  primary:
+    id: zundamon
+    role: 解説役
+    style: "〜なのだ！"
+    personality: "元気で好奇心旺盛"
+  secondary:
+    id: metan
+    role: 質問役・リアクション
+    style: "〜わね、〜かしら？"
+    personality: "落ち着いていて鋭い質問をする"
+
+# テーマ・スタイル
+style:
+  theme: blackboard
+  colors:
+    background: "#ffffff"
+    blackboard: "#2a5a4c"
+    zundamon: "#228B22"
+    metan: "#FF1493"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 70
+    weight: "900"
+
+# 台本構成
+structure:
+  sections:
+    - id: hook
+      name: "フック"
+      duration: 5
+      description: "視聴者の興味を引く一言"
+      example: "〇〇って、実はすごいんだよ！"
+
+    - id: question
+      name: "問いかけ"
+      duration: 8
+      description: "めたんが疑問を投げかける"
+      example: "えっ、それってどういうこと？"
+
+    - id: basics
+      name: "基礎説明"
+      duration: 15
+      description: "基本概念をわかりやすく説明"
+      visual: "図解・アニメーション推奨"
+
+    - id: demonstration
+      name: "実演・例"
+      duration: 20
+      description: "具体例で理解を深める"
+      visual: "画像・動画・シミュレーション"
+
+    - id: insight
+      name: "なるほど！"
+      duration: 8
+      description: "めたんの理解・驚きのリアクション"
+
+    - id: summary
+      name: "まとめ"
+      duration: 5
+      description: "ポイントを簡潔にまとめる"
+
+    - id: cta
+      name: "CTA"
+      duration: 5
+      description: "フォロー・コメント促進"
+      example: "もっと知りたいことがあったらコメントしてね！"
+
+# 台本生成プロンプト用ガイドライン
+prompts:
+  tone:
+    - "高校生にもわかる言葉で説明"
+    - "専門用語は使ったらすぐ説明"
+    - "身近な例えを多用"
+  avoid:
+    - "難しい数式"
+    - "専門用語の羅列"
+    - "長すぎる説明"
+  include:
+    - "視覚的な説明指示 [図解: 〇〇]"
+    - "驚きポイント"
+    - "「なるほど！」と思える瞬間"
+
+# サンプルトピック
+examples:
+  - "なぜ空は青いのか"
+  - "電子レンジの仕組み"
+  - "虹ができる原理"
+  - "飛行機が飛ぶ仕組み"
+  - "なぜ氷は水に浮くのか"

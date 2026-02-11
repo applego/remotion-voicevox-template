@@ -1,0 +1,129 @@
+name: wise-quotes
+description: "偉人の名言・教えを紹介する動画テンプレート"
+version: 1.0.0
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+
+# キャラクター設定
+characters:
+  primary:
+    id: zundamon
+    role: 紹介役・解説
+    style: "〜なのだ！"
+    personality: "敬意を持って偉人を紹介"
+  secondary:
+    id: metan
+    role: 感想・共感
+    style: "〜わね、〜かしら？"
+    personality: "現代に通じる視点を提供"
+
+# テーマ・スタイル
+style:
+  theme: blackboard
+  colors:
+    background: "#ffffff"
+    blackboard: "#2a5a4c"
+    zundamon: "#228B22"
+    metan: "#FF1493"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 70
+    weight: "900"
+
+# 台本構成
+structure:
+  sections:
+    - id: hook
+      name: "名言フック"
+      duration: 5
+      description: "印象的な名言でスタート"
+      visual: "名言テキスト大きく表示"
+
+    - id: intro
+      name: "偉人紹介"
+      duration: 8
+      description: "誰の言葉か、どんな人物か"
+      visual: "偉人の画像/イラスト"
+
+    - id: context
+      name: "背景説明"
+      duration: 12
+      description: "なぜこの言葉を残したのか"
+      example: "実は〇〇の時代、こんな状況だったのだ"
+
+    - id: meaning
+      name: "深い意味"
+      duration: 15
+      description: "名言の真意を解説"
+
+    - id: modern
+      name: "現代への示唆"
+      duration: 12
+      description: "今の私たちに何を教えてくれるか"
+      example: "今の時代にも通じる教えね"
+
+    - id: outro
+      name: "まとめ・オチ"
+      duration: 8
+      description: "名言を再度強調し、オチまたは余韻で締める"
+      visual: "名言を再表示"
+      storytelling:
+        reference: ".agent/skills/storytelling/SKILL.md"
+        patterns:
+          - "余韻型: 名言を反芻させて静かに締める（笑いより深み）"
+          - "ギャップ型: 偉人の意外な一面で親しみを持たせる"
+          - "自分ごと型: 視聴者が自分に当てはめられる問いかけ"
+
+# 台本生成プロンプト用ガイドライン
+prompts:
+  tone:
+    - "敬意を持ちつつ親しみやすく"
+    - "難しくなりすぎない"
+    - "現代との接点を見つける"
+  avoid:
+    - "偉人を神格化しすぎる"
+    - "難解な言い回し"
+    - "説教臭くなる"
+  include:
+    - "偉人のエピソード"
+    - "時代背景"
+    - "現代への応用"
+    - "視聴者が共感できるポイント"
+  storytelling:
+    reference: ".agent/skills/storytelling/SKILL.md"
+    checklist:
+      - "opening: 名言の引用で引き込む（大袈裟な前置き）"
+      - "途中: めたんのリアクションに「強い感想」を使う"
+      - "outro: 余韻型・ギャップ型・自分ごと型のいずれかで締める"
+
+# 偉人カテゴリ
+categories:
+  japanese:
+    name: "日本の偉人"
+    examples:
+      - "岡潔"
+      - "吉田松陰"
+      - "渋沢栄一"
+      - "湯川秀樹"
+  philosophers:
+    name: "哲学者"
+    examples:
+      - "ソクラテス"
+      - "ニーチェ"
+      - "孔子"
+  scientists:
+    name: "科学者"
+    examples:
+      - "アインシュタイン"
+      - "ダーウィン"
+      - "ファインマン"
+  artists:
+    name: "芸術家"
+    examples:
+      - "レオナルド・ダ・ヴィンチ"
+      - "ゴッホ"
+      - "宮沢賢治"

@@ -1,0 +1,140 @@
+name: paradox
+description: "パラドックス・思考実験を紹介する動画テンプレート"
+version: 1.0.0
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 90
+  fps: 30
+
+# キャラクター設定
+characters:
+  primary:
+    id: zundamon
+    role: ナビゲーター・解説役
+    style: "〜なのだ！"
+    personality: "知識豊富で謎解きを楽しむ"
+  secondary:
+    id: metan
+    role: 視聴者代表・リアクション
+    style: "〜わね、〜かしら？"
+    personality: "論理的に考え、素直に驚く"
+
+# テーマ・スタイル
+style:
+  theme: mystery
+  colors:
+    background: "#1a1a2e"
+    primary: "#16213e"
+    accent: "#e94560"
+    zundamon: "#00ff88"
+    metan: "#ff6b9d"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 70
+    weight: "900"
+
+# 台本構成
+structure:
+  sections:
+    - id: hook
+      name: "衝撃のフック"
+      duration: 5
+      description: "矛盾・パラドックスを匂わせる"
+      example: "これ、絶対おかしくない？"
+      emotion: surprised
+
+    - id: setup
+      name: "パラドックス紹介"
+      duration: 10
+      description: "パラドックスの名前と概要"
+      example: "今日紹介するのは『〇〇のパラドックス』なのだ！"
+
+    - id: scenario
+      name: "シナリオ説明"
+      duration: 15
+      description: "パラドックスの状況を詳しく説明"
+      visual: "図解・アニメーション必須"
+
+    - id: think
+      name: "考えさせる間"
+      duration: 8
+      description: "視聴者に考える時間を与える"
+      example: "さあ、どうなると思う？"
+      pauseAfter: 45
+
+    - id: reveal
+      name: "答え・解説"
+      duration: 20
+      description: "パラドックスの解説・答え"
+      visual: "段階的な図解"
+
+    - id: mindblown
+      name: "驚きのリアクション"
+      duration: 8
+      description: "めたんの驚き、視聴者の代弁"
+      example: "えっ、そうなの!? 信じられない！"
+      emotion: surprised
+
+    - id: deeper
+      name: "深掘り"
+      duration: 15
+      description: "さらに深い考察や派生"
+      example: "実はこれ、〇〇にも応用されているのだ"
+
+    - id: cta
+      name: "CTA"
+      duration: 8
+      description: "意見を求める・次回予告"
+      example: "あなたはどう思う？コメントで教えて！"
+
+# 台本生成プロンプト用ガイドライン
+prompts:
+  tone:
+    - "謎解き風、ワクワク感"
+    - "知的好奇心を刺激"
+    - "「えっ!?」と思わせる"
+  avoid:
+    - "いきなり答えを言う"
+    - "難しすぎる数学的証明"
+    - "退屈な説明"
+  include:
+    - "考える間（ポーズ）"
+    - "驚きのリアクション"
+    - "身近な例えへの置き換え"
+    - "視覚的なビジュアル指示"
+
+# パラドックスカテゴリ
+categories:
+  logic:
+    name: "論理パラドックス"
+    examples:
+      - "嘘つきのパラドックス"
+      - "ラッセルのパラドックス"
+      - "自己参照パラドックス"
+  physics:
+    name: "物理パラドックス"
+    examples:
+      - "双子のパラドックス"
+      - "シュレディンガーの猫"
+      - "EPRパラドックス"
+  infinity:
+    name: "無限のパラドックス"
+    examples:
+      - "ゼノンのパラドックス"
+      - "ヒルベルトのホテル"
+      - "バナッハ＝タルスキーのパラドックス"
+  probability:
+    name: "確率パラドックス"
+    examples:
+      - "モンティ・ホール問題"
+      - "誕生日のパラドックス"
+      - "サンクトペテルブルクのパラドックス"
+  thought:
+    name: "思考実験"
+    examples:
+      - "トロッコ問題"
+      - "テセウスの船"
+      - "中国語の部屋"
+      - "哲学的ゾンビ"
