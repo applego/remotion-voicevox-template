@@ -37,3 +37,19 @@ kenzaki:
   color: "#8B4513"  # サドルブラウン（落ち着いた）
   defaultPauseAfter: 18
   role: fact-checker
+
+aoyama:
+  name: 青山龍星
+  speakerId: 13
+  position: right
+  color: "#2E8B57"  # シーグリーン（知性・経験）
+  defaultPauseAfter: 22
+  role: commentator
+
+chibi_jii:
+  name: ちび式じい
+  speakerId: 42
+  position: center
+  color: "#A0522D"  # シエナ（親しみやすさ・温かみ）
+  defaultPauseAfter: 20
+  role: commentator
