@@ -38,12 +38,20 @@ export const SETTINGS = {
     "background": "#ffffff",
     "text": "#ffffff",
     "zundamon": "#228B22",
-    "metan": "#FF1493"
+    "metan": "#FF1493",
+    "chibi_jii": "#A0522D"
   }
 } as const;
 
 // キャラクターごとの利用可能な画像ファイル
 export const AVAILABLE_IMAGES: Record<string, string[]> = {
+  "announcer": [],
+  "aoyama": [],
+  "chibi_jii": [
+    "mouth_close.png",
+    "mouth_open.png"
+  ],
+  "kenzaki": [],
   "kuro_zunda": [
     "mouth_close.png",
     "mouth_open.png"

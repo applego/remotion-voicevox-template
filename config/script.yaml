@@ -1,32 +1,123 @@
-# スクリプトデータ
-# セリフを編集後、npm run sync-script で反映
+# wise-quotes-ja: 20260303 - アリストテレスの名言「習慣が人生を変える」
+# Character: announcer (No.7アナウンス, speakerId: 30)
+# Duration target: ~60 seconds
 
 - id: 1
-  character: zundamon
-  text: ずんだもんなのだ！
+  character: announcer
+  text: "あなたの人生を変える、たった一つの言葉があります"
   scene: 1
+  pauseAfter: 20
+  visual:
+    type: text
+    text: "あなたの人生を変える\nたった一つの言葉"
+    fontSize: 72
+    color: "#ffffff"
+    animation: fadeIn
+
+- id: 2
+  character: announcer
+  text: "多くの人は、成功するために何か特別なことが必要だと思っています"
+  scene: 2
   pauseAfter: 15
   visual:
     type: text
-    text: "Remotion × VOICEVOX\nテンプレート"
-    fontSize: 80
+    text: "成功には\n特別なことが必要？"
+    fontSize: 64
     color: "#ffffff"
-    animation: zoomIn
-
-- id: 2
-  character: metan
-  text: 四国めたんです。
-  scene: 1
-  pauseAfter: 15
+    animation: slideUp
 
 - id: 3
-  character: zundamon
-  text: このテンプレートで紹介動画が作れるのだ！
-  scene: 1
-  pauseAfter: 10
+  character: announcer
+  text: "でも、実は..."
+  scene: 2
+  pauseAfter: 25
 
 - id: 4
-  character: metan
-  text: よろしくね。
-  scene: 1
+  character: announcer
+  text: "成功と失敗の違いは、たった一つの習慣から生まれるのです"
+  scene: 2
+  pauseAfter: 20
+  visual:
+    type: text
+    text: "違いは\nたった一つの「習慣」"
+    fontSize: 72
+    color: "#FFD700"
+    animation: zoomIn
+
+- id: 5
+  character: announcer
+  text: "アリストテレスはこう言いました"
+  scene: 3
+  pauseAfter: 15
+  visual:
+    type: text
+    text: "アリストテレス\n（古代ギリシャ哲学者）"
+    fontSize: 56
+    color: "#ffffff"
+    animation: fadeIn
+
+- id: 6
+  character: announcer
+  text: "私たちは繰り返し行うことの集積である。だから優秀さとは、行為ではなく習慣なのだ"
+  scene: 3
   pauseAfter: 30
+  visual:
+    type: text
+    text: "「優秀さとは\n行為ではなく習慣なのだ」\n— アリストテレス"
+    fontSize: 56
+    color: "#FFD700"
+    animation: fadeIn
+
+- id: 7
+  character: announcer
+  text: "つまり、今日あなたが繰り返し選ぶ小さな行動が、明日のあなたを形作るのです"
+  scene: 4
+  pauseAfter: 20
+  visual:
+    type: text
+    text: "今日の小さな行動が\n明日のあなたを作る"
+    fontSize: 64
+    color: "#ffffff"
+    animation: slideUp
+
+- id: 8
+  character: announcer
+  text: "朝の5分の読書。夜の10分の振り返り。毎日の感謝の言葉。"
+  scene: 4
+  pauseAfter: 15
+  visual:
+    type: text
+    text: "朝5分の読書\n夜10分の振り返り\n毎日の感謝"
+    fontSize: 56
+    color: "#90EE90"
+    animation: slideLeft
+
+- id: 9
+  character: announcer
+  text: "これらの小さな習慣が、あなたの人生を根本から変えていきます"
+  scene: 4
+  pauseAfter: 20
+
+- id: 10
+  character: announcer
+  text: "今日から始めませんか？たった一つでいい。繰り返せる小さな習慣を。"
+  scene: 5
+  pauseAfter: 20
+  visual:
+    type: text
+    text: "今日から始めよう\nたった一つの習慣を"
+    fontSize: 72
+    color: "#FFD700"
+    animation: zoomIn
+
+- id: 11
+  character: announcer
+  text: "あなたの未来は、今この瞬間の選択から始まります"
+  scene: 5
+  pauseAfter: 30
+  visual:
+    type: text
+    text: "未来は\n今この瞬間の選択から"
+    fontSize: 64
+    color: "#ffffff"
+    animation: fadeIn

@@ -89,8 +89,8 @@ function main() {
 
   // Generate characterSpeakerMap
   const speakerMapEntries = characterIds
-    .filter(id => characters[id].speakerId !== null)
-    .map(id => `  ${id}: ${characters[id].speakerId},`);
+    .filter(id => characters[id]?.speakerId !== null)
+    .map(id => `  ${id}: ${characters[id]?.speakerId},`);
 
   // Process script lines
   const processedLines = scriptData.map((line, index) => {

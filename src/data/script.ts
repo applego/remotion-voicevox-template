@@ -52,34 +52,176 @@ export interface SceneInfo {
 }
 
 export const scenes: SceneInfo[] = [
-  { id: 1, title: "オープニング（フック）", background: "gradient" },
-  { id: 2, title: "トムジェリ誕生", background: "solid" },
-  { id: 3, title: "驚きの名前", background: "gradient" },
-  { id: 4, title: "シンデレラストーリー", background: "solid" },
-  { id: 5, title: "オチ＆CTA", background: "gradient" },
+  { id: 1, title: "オープニング", background: "gradient" },
+  { id: 2, title: "メインコンテンツ", background: "solid" },
+  { id: 3, title: "エンディング", background: "gradient" },
 ];
 
-// 2月10日: トムとジェリー誕生日 台本 (v2: storytelling skill applied)
+// このファイルは config/script.yaml から自動生成されます
+// 編集する場合は config/script.yaml を編集して npm run sync-script を実行してください
 export const scriptData: ScriptLine[] = [
-  { id: 1, character: "zundamon", text: "今日はヤバすぎるニュースがあるのだ！聞いて驚くなよ？", scene: 1, pauseAfter: 15, emotion: "happy", visual: { type: "text", text: "⚡ 2月10日 ⚡\n衝撃の歴史", fontSize: 100, color: "#ffffff", animation: "zoomIn" }, voiceFile: "01_zundamon.wav", durationInFrames: 156 },
-  { id: 2, character: "metan", text: "えっ、なになに？そんなに煽られると気になるじゃない！", scene: 1, pauseAfter: 10, emotion: "surprised", voiceFile: "02_metan.wav", durationInFrames: 156 },
-  { id: 3, character: "zundamon", text: "世界で一番有名なケンカが始まった日なのだ！", scene: 1, pauseAfter: 15, voiceFile: "03_zundamon.wav", durationInFrames: 139 },
-  { id: 4, character: "zundamon", text: "1940年の今日、トムとジェリーがドカーンと映画館に登場したのだ！", scene: 2, pauseAfter: 10, visual: { type: "text", text: "🐱🐭\n1940年2月10日\nトムとジェリー誕生！", fontSize: 72, color: "#ffffff", animation: "bounce" }, voiceFile: "04_zundamon.wav", durationInFrames: 224 },
-  { id: 5, character: "metan", text: "84年前!? あのネコとネズミのバチバチが始まった日ってこと？", scene: 2, pauseAfter: 10, emotion: "surprised", voiceFile: "05_metan.wav", durationInFrames: 177 },
-  { id: 6, character: "zundamon", text: "でもね、最初の名前を聞いたらひっくり返るのだ！", scene: 3, pauseAfter: 15, visual: { type: "text", text: "⚡ 衝撃の事実 ⚡", fontSize: 72, color: "#ffff00", animation: "bounce" }, voiceFile: "06_zundamon.wav", durationInFrames: 146 },
-  { id: 7, character: "zundamon", text: "トムじゃなくてジャスパー！ジェリーじゃなくてジンクス！だったのだ！", displayText: "トムじゃなくて「ジャスパー」！ジェリーじゃなくて「ジンクス」！だったのだ！", scene: 3, pauseAfter: 10, emotion: "surprised", visual: { type: "text", text: "トム → ジャスパー\nジェリー → ジンクス", fontSize: 64, color: "#ffffff", animation: "slideUp" }, voiceFile: "07_zundamon.wav", durationInFrames: 175 },
-  { id: 8, character: "metan", text: "ジャスパーとジンクス!? それってドラえもんをタヌキロボって呼ぶくらい違和感あるわね！", displayText: "ジャスパーとジンクス!? それってドラえもんを「タヌキロボ」って呼ぶくらい違和感あるわね！", scene: 3, pauseAfter: 10, emotion: "surprised", voiceFile: "08_metan.wav", durationInFrames: 192 },
-  { id: 9, character: "zundamon", text: "改名大成功すぎマンなのだ！", scene: 3, pauseAfter: 10, emotion: "happy", voiceFile: "09_zundamon.wav", durationInFrames: 96 },
-  { id: 10, character: "zundamon", text: "しかもね、第1作は宣伝ゼロ！エスエヌエスもない時代に、ひっそり公開されたのだ！", displayText: "しかもね、第1作は宣伝ゼロ！SNSもない時代に、ひっそり公開されたのだ！", scene: 4, pauseAfter: 10, voiceFile: "10_zundamon.wav", durationInFrames: 268 },
-  { id: 11, character: "metan", text: "宣伝なしって、バズらせる気なかったんかい！", scene: 4, pauseAfter: 10, emotion: "surprised", voiceFile: "11_metan.wav", durationInFrames: 111 },
-  { id: 12, character: "zundamon", text: "ところがどっこい！なんとアカデミー賞にノミネートされたのだ！", scene: 4, pauseAfter: 10, emotion: "happy", visual: { type: "text", text: "🏆 アカデミー賞\nノミネート！", fontSize: 72, color: "#ffd700", animation: "zoomIn" }, voiceFile: "12_zundamon.wav", durationInFrames: 172 },
-  { id: 13, character: "metan", text: "宣伝ゼロからアカデミー賞って、逆転ホームランどころじゃないわ！満塁サヨナラホームランよ！", scene: 4, pauseAfter: 10, emotion: "happy", voiceFile: "13_metan.wav", durationInFrames: 236 },
-  { id: 14, character: "zundamon", text: "名前を変えて、宣伝なしで、世界一のアニメになったのだ。", scene: 5, pauseAfter: 10, visual: { type: "text", text: "【学び】\n大事なのは中身！\n名前じゃない！", fontSize: 64, color: "#ffffff", animation: "fadeIn" }, voiceFile: "14_zundamon.wav", durationInFrames: 186 },
-  { id: 15, character: "metan", text: "つまり、大事なのは名前じゃなくて中身ってことね。", scene: 5, pauseAfter: 10, emotion: "thinking", voiceFile: "15_metan.wav", durationInFrames: 130 },
-  { id: 16, character: "zundamon", text: "84年間追いかけっこしてるけど、夢も追いかけ続けた結果なのだ！", scene: 5, pauseAfter: 10, emotion: "happy", voiceFile: "16_zundamon.wav", durationInFrames: 211 },
-  { id: 17, character: "metan", text: "世界一有名なケンカが、世界一愛されるアニメになるなんてね。やっぱりヤバい歴史だったわ！", scene: 5, pauseAfter: 10, emotion: "happy", voiceFile: "17_metan.wav", durationInFrames: 243 },
-  { id: 18, character: "zundamon", text: "気になる歴史があったらコメントで教えてほしいのだ！バイバイなのだ〜！", scene: 5, pauseAfter: 0, emotion: "happy", voiceFile: "18_zundamon.wav", durationInFrames: 188 },
-  { id: 19, character: "metan", text: "バイバイ〜！", scene: 5, pauseAfter: 5, emotion: "happy", voiceFile: "19_metan.wav", durationInFrames: 25 },
+  {
+    "id": 1,
+    "character": "announcer",
+    "text": "あなたの人生を変える、たった一つの言葉があります",
+    "scene": 1,
+    "pauseAfter": 20,
+    "visual": {
+      "type": "text",
+      "text": "あなたの人生を変える\nたった一つの言葉",
+      "fontSize": 72,
+      "color": "#ffffff",
+      "animation": "fadeIn"
+    },
+    "voiceFile": "01_announcer.wav",
+    "durationInFrames": 130
+  },
+  {
+    "id": 2,
+    "character": "announcer",
+    "text": "多くの人は、成功するために何か特別なことが必要だと思っています",
+    "scene": 2,
+    "pauseAfter": 15,
+    "visual": {
+      "type": "text",
+      "text": "成功には\n特別なことが必要？",
+      "fontSize": 64,
+      "color": "#ffffff",
+      "animation": "slideUp"
+    },
+    "voiceFile": "02_announcer.wav",
+    "durationInFrames": 179
+  },
+  {
+    "id": 3,
+    "character": "announcer",
+    "text": "でも、実は...",
+    "scene": 2,
+    "pauseAfter": 25,
+    "voiceFile": "03_announcer.wav",
+    "durationInFrames": 47
+  },
+  {
+    "id": 4,
+    "character": "announcer",
+    "text": "成功と失敗の違いは、たった一つの習慣から生まれるのです",
+    "scene": 2,
+    "pauseAfter": 20,
+    "visual": {
+      "type": "text",
+      "text": "違いは\nたった一つの「習慣」",
+      "fontSize": 72,
+      "color": "#FFD700",
+      "animation": "zoomIn"
+    },
+    "voiceFile": "04_announcer.wav",
+    "durationInFrames": 158
+  },
+  {
+    "id": 5,
+    "character": "announcer",
+    "text": "アリストテレスはこう言いました",
+    "scene": 3,
+    "pauseAfter": 15,
+    "visual": {
+      "type": "text",
+      "text": "アリストテレス\n（古代ギリシャ哲学者）",
+      "fontSize": 56,
+      "color": "#ffffff",
+      "animation": "fadeIn"
+    },
+    "voiceFile": "05_announcer.wav",
+    "durationInFrames": 68
+  },
+  {
+    "id": 6,
+    "character": "announcer",
+    "text": "私たちは繰り返し行うことの集積である。だから優秀さとは、行為ではなく習慣なのだ",
+    "scene": 3,
+    "pauseAfter": 30,
+    "visual": {
+      "type": "text",
+      "text": "「優秀さとは\n行為ではなく習慣なのだ」\n— アリストテレス",
+      "fontSize": 56,
+      "color": "#FFD700",
+      "animation": "fadeIn"
+    },
+    "voiceFile": "06_announcer.wav",
+    "durationInFrames": 234
+  },
+  {
+    "id": 7,
+    "character": "announcer",
+    "text": "つまり、今日あなたが繰り返し選ぶ小さな行動が、明日のあなたを形作るのです",
+    "scene": 4,
+    "pauseAfter": 20,
+    "visual": {
+      "type": "text",
+      "text": "今日の小さな行動が\n明日のあなたを作る",
+      "fontSize": 64,
+      "color": "#ffffff",
+      "animation": "slideUp"
+    },
+    "voiceFile": "07_announcer.wav",
+    "durationInFrames": 212
+  },
+  {
+    "id": 8,
+    "character": "announcer",
+    "text": "朝の5分の読書。夜の10分の振り返り。毎日の感謝の言葉。",
+    "scene": 4,
+    "pauseAfter": 15,
+    "visual": {
+      "type": "text",
+      "text": "朝5分の読書\n夜10分の振り返り\n毎日の感謝",
+      "fontSize": 56,
+      "color": "#90EE90",
+      "animation": "slideLeft"
+    },
+    "voiceFile": "08_announcer.wav",
+    "durationInFrames": 185
+  },
+  {
+    "id": 9,
+    "character": "announcer",
+    "text": "これらの小さな習慣が、あなたの人生を根本から変えていきます",
+    "scene": 4,
+    "pauseAfter": 20,
+    "voiceFile": "09_announcer.wav",
+    "durationInFrames": 166
+  },
+  {
+    "id": 10,
+    "character": "announcer",
+    "text": "今日から始めませんか？たった一つでいい。繰り返せる小さな習慣を。",
+    "scene": 5,
+    "pauseAfter": 20,
+    "visual": {
+      "type": "text",
+      "text": "今日から始めよう\nたった一つの習慣を",
+      "fontSize": 72,
+      "color": "#FFD700",
+      "animation": "zoomIn"
+    },
+    "voiceFile": "10_announcer.wav",
+    "durationInFrames": 188
+  },
+  {
+    "id": 11,
+    "character": "announcer",
+    "text": "あなたの未来は、今この瞬間の選択から始まります",
+    "scene": 5,
+    "pauseAfter": 30,
+    "visual": {
+      "type": "text",
+      "text": "未来は\n今この瞬間の選択から",
+      "fontSize": 64,
+      "color": "#ffffff",
+      "animation": "fadeIn"
+    },
+    "voiceFile": "11_announcer.wav",
+    "durationInFrames": 138
+  }
 ];
 
 // VOICEVOXスクリプト生成用

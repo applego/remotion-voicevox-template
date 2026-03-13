@@ -180,17 +180,17 @@ async function main() {
 
   if (scriptDataMatch) {
     // 簡易パース（本番ではAST解析を使用）
-    const dataStr = scriptDataMatch[1];
+    const dataStr = scriptDataMatch[1] ?? "";
     const lineMatches = dataStr.matchAll(
       /\{\s*"?id"?:\s*(\d+),\s*"?character"?:\s*"([^"]+)",\s*"?text"?:\s*"([^"]+)"[\s\S]*?"?voiceFile"?:\s*"([^"]+)"/g
     );
 
     for (const match of lineMatches) {
       scriptData.push({
-        id: parseInt(match[1]),
-        character: match[2],
-        text: match[3],
-        voiceFile: match[4],
+        id: parseInt(match[1] ?? "0"),
+        character: match[2] ?? "",
+        text: match[3] ?? "",
+        voiceFile: match[4] ?? "",
       });
     }
   }
