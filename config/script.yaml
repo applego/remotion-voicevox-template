@@ -1,123 +1,98 @@
-# wise-quotes-ja: 20260303 - アリストテレスの名言「習慣が人生を変える」
-# Character: announcer (No.7アナウンス, speakerId: 30)
+# wise-quotes-ja: 20260228 - 成功者の朝には秘密がある｜スティーブ・ジョブズが見ていたもの
+# Character: metan + zundamon
 # Duration target: ~60 seconds
-
 - id: 1
-  character: announcer
-  text: "あなたの人生を変える、たった一つの言葉があります"
+  character: zundamon
+  text: "なぜ成功者は早起きなのか？スティーブ・ジョブズの答えが衝撃的だったのだ！"
   scene: 1
-  pauseAfter: 20
+  pauseAfter: 11
   visual:
     type: text
-    text: "あなたの人生を変える\nたった一つの言葉"
+    text: "なぜ成功者は\n早起きなのか？"
     fontSize: 72
     color: "#ffffff"
     animation: fadeIn
 
 - id: 2
-  character: announcer
-  text: "多くの人は、成功するために何か特別なことが必要だと思っています"
-  scene: 2
-  pauseAfter: 15
-  visual:
-    type: text
-    text: "成功には\n特別なことが必要？"
-    fontSize: 64
-    color: "#ffffff"
-    animation: slideUp
+  character: metan
+  text: "スティーブ・ジョブズは毎朝、鏡に向かってこう問いかけていました。「もし今日が人生最後の日だとしたら、今日やろうとしていることをやりたいと思うだろうか？」"
+  scene: 1
+  pauseAfter: 23
 
 - id: 3
-  character: announcer
-  text: "でも、実は..."
-  scene: 2
-  pauseAfter: 25
+  character: zundamon
+  text: "えぇー！毎朝そんなこと考えてたのだ！？"
+  scene: 1
+  pauseAfter: 10
 
 - id: 4
-  character: announcer
-  text: "成功と失敗の違いは、たった一つの習慣から生まれるのです"
+  character: metan
+  text: "この習慣から3つのことが分かります。まず、時間の尊さを毎日意識していること。"
   scene: 2
-  pauseAfter: 20
+  pauseAfter: 12
   visual:
     type: text
-    text: "違いは\nたった一つの「習慣」"
-    fontSize: 72
-    color: "#FFD700"
-    animation: zoomIn
-
-- id: 5
-  character: announcer
-  text: "アリストテレスはこう言いました"
-  scene: 3
-  pauseAfter: 15
-  visual:
-    type: text
-    text: "アリストテレス\n（古代ギリシャ哲学者）"
-    fontSize: 56
-    color: "#ffffff"
-    animation: fadeIn
-
-- id: 6
-  character: announcer
-  text: "私たちは繰り返し行うことの集積である。だから優秀さとは、行為ではなく習慣なのだ"
-  scene: 3
-  pauseAfter: 30
-  visual:
-    type: text
-    text: "「優秀さとは\n行為ではなく習慣なのだ」\n— アリストテレス"
-    fontSize: 56
-    color: "#FFD700"
-    animation: fadeIn
-
-- id: 7
-  character: announcer
-  text: "つまり、今日あなたが繰り返し選ぶ小さな行動が、明日のあなたを形作るのです"
-  scene: 4
-  pauseAfter: 20
-  visual:
-    type: text
-    text: "今日の小さな行動が\n明日のあなたを作る"
+    text: "この習慣から3つのことが分かります。\n"
     fontSize: 64
     color: "#ffffff"
     animation: slideUp
 
-- id: 8
-  character: announcer
-  text: "朝の5分の読書。夜の10分の振り返り。毎日の感謝の言葉。"
-  scene: 4
+- id: 5
+  character: zundamon
+  text: "確かに、時間は取り戻せないのだ！"
+  scene: 2
+  pauseAfter: 10
+
+- id: 6
+  character: metan
+  text: "二つ目は、自分の選択に責任を持つこと。そして三つ目は、本当に大切なことだけに集中すること、です。"
+  scene: 2
   pauseAfter: 15
+
+- id: 7
+  character: zundamon
+  text: "でも、普通の人はどうすればいいのだ？"
+  scene: 3
+  pauseAfter: 10
   visual:
     type: text
-    text: "朝5分の読書\n夜10分の振り返り\n毎日の感謝"
+    text: "でも、\n普通の人はどうすればいいのだ？"
     fontSize: 56
-    color: "#90EE90"
-    animation: slideLeft
+    color: "#ffffff"
+    animation: fadeIn
+
+- id: 8
+  character: metan
+  text: "まず朝起きたら「今日、本当に大切なことは何か？」と自分に問いかけてみてください。そして「もし今日が最後なら、この予定は本当に必要か？」と考えるんです。"
+  scene: 3
+  pauseAfter: 23
 
 - id: 9
-  character: announcer
-  text: "これらの小さな習慣が、あなたの人生を根本から変えていきます"
-  scene: 4
-  pauseAfter: 20
+  character: zundamon
+  text: "なるほど〜！不要なことを削って、大切なことに時間を使うのだ！"
+  scene: 3
+  pauseAfter: 10
 
 - id: 10
-  character: announcer
-  text: "今日から始めませんか？たった一つでいい。繰り返せる小さな習慣を。"
-  scene: 5
-  pauseAfter: 20
+  character: metan
+  text: "ジョブズのこの習慣は、単なる早起きではなく「意識的に生きる」ということなんですね。毎日の選択に責任を持ち、限られた時間を最大限に活用する。これが成功者の朝の秘密です。"
+  scene: 4
+  pauseAfter: 25
   visual:
     type: text
-    text: "今日から始めよう\nたった一つの習慣を"
-    fontSize: 72
+    text: "ジョブズのこの習慣は、"
+    fontSize: 56
     color: "#FFD700"
-    animation: zoomIn
+    animation: fadeIn
 
 - id: 11
-  character: announcer
-  text: "あなたの未来は、今この瞬間の選択から始まります"
-  scene: 5
-  pauseAfter: 30
+  character: zundamon
+  text: "明日の朝、鏡に向かって問いかけてみるのだ！役に立ったら👍とチャンネル登録もお願いするのだ〜✨"
+  scene: 4
+  pauseAfter: 14
   visual:
     type: text
-    text: "未来は\n今この瞬間の選択から"
-    fontSize: 64
-    color: "#ffffff"
+    text: "明日の朝、"
+    fontSize: 56
+    color: "#FFD700"
     animation: fadeIn
