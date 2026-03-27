@@ -1,0 +1,132 @@
+name: kids-educational
+description: "子ども向け教育・科学ショート動画テンプレート"
+version: 1.0.0
+
+# Remotion composition
+remotion:
+  composition_id: KidsShort   # uses KidsShort.tsx
+  data_type: KidsConfig
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+  width: 1080
+  height: 1920
+
+# スタイル
+style:
+  theme: bright_kids
+  bgColor: "#1a237e"
+  textColor: "#FFFFFF"
+  accentColor: "#FFD600"
+  fontSize: 58
+
+# BGM (明るい子ども向け音楽)
+bgm:
+  src: "kids_bgm.mp3"
+  volume: 0.2
+
+# スクリプト構成
+structure:
+  segment_types:
+    intro:
+      label: "はじめに"
+      description: "子どもの興味を引く導入"
+      duration: 5
+      example:
+        displayText: "空はなんで\n青いの？"
+        emoji: "🌈"
+
+    question:
+      label: "なんで？"
+      description: "疑問・問い"
+      duration: 6
+      example:
+        displayText: "太陽の光は\nいろんな色が\n混ざってる！"
+        emoji: "☀️"
+
+    answer:
+      label: "こたえ！"
+      description: "答え・仕組みの説明"
+      duration: 8
+      example:
+        displayText: "青い光だけが\n空全体に\n広がる！"
+        emoji: "💙"
+        highlightWords: ["青い光"]
+
+    fun_fact:
+      label: "びっくり！"
+      description: "関連する面白い豆知識"
+      duration: 8
+      example:
+        displayText: "レイリー散乱！"
+        subText: "仕組みはシンプル！"
+        emoji: "🔬"
+
+    outro:
+      label: "まとめ"
+      description: "フォロー促進・次の「なんで？」予告"
+      duration: 8
+      example:
+        displayText: "次の「なんで？」も\n一緒に学ぼう！"
+        emoji: "⭐"
+
+  recommended_flow:
+    - "intro (1) → question (1) → answer (1〜2) → fun_fact (1〜2) → outro (1)"
+    - "合計5〜6セグメント"
+
+# 対応チャンネル
+channels:
+  - kids-science-ja
+  - kids-ehon-ja
+  - kids-songs-ja
+  - anime-story-ja (子ども向け)
+
+# テーマカテゴリ
+categories:
+  science:
+    name: "なんで？シリーズ（科学）"
+    series: "kids-science-ja"
+    topics:
+      - "空はなんで青いの？"
+      - "虹はなんで出るの？"
+      - "雨はなんで降るの？"
+      - "磁石はなんでくっつくの？"
+      - "植物はなんで育つの？"
+  animals:
+    name: "どうぶつ不思議"
+    topics:
+      - "キリンの首はなんで長いの？"
+      - "魚はなんで水の中で息ができるの？"
+  ehon:
+    name: "えほん読み聞かせ"
+    series: "kids-ehon-ja"
+    topics:
+      - "友達との仲直り"
+      - "お片付けの大切さ"
+      - "失敗してもいいんだよ"
+
+# スクリプト生成ガイドライン
+prompts:
+  age_target: "4〜8歳"
+  tone:
+    - "明るく、元気いっぱい"
+    - "短い文で話す（一文10文字以内）"
+    - "擬音語・擬態語を積極的に使う"
+    - "「びっくり！」「すごい！」などのリアクション"
+  display_text_rules:
+    - "displayTextは最大3行"
+    - "1行最大8文字（小学校低学年が読める漢字のみ）"
+    - "ひらがな中心（難しい漢字はひらがなに）"
+    - "emojiは必ず1つ設定"
+    - "highlightWordsはキーワード1〜2個"
+  voice_style:
+    speaker: "ずんだもん（あまあま）/ なぜなぜちゃん"
+    style: "高くてかわいい声、元気いっぱい、ゆっくりはっきり"
+  avoid:
+    - "難しい漢字・専門用語"
+    - "ネガティブな内容"
+    - "長い文章"
+    - "6セグメントを超える長さ"

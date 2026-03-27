@@ -1,0 +1,124 @@
+name: bizdev-tips
+description: "ビジネス・自己啓発ナレーションショート動画テンプレート"
+version: 1.0.0
+
+# Remotion composition
+remotion:
+  composition_id: NarrationShort   # uses NarrationShort.tsx
+  data_type: NarrationConfig
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+  width: 1080
+  height: 1920
+
+# スタイル
+style:
+  theme: professional_dark
+  accentColor: "#4FC3F7"
+  bgColor: "#0d1b2a"
+  bodyFontSize: 52
+  hookFontSize: 64
+  textColor: "#FFFFFF"
+  subTextColor: "#90CAF9"
+
+# BGM
+bgm:
+  src: "ambient_test.mp3"
+  volume: 0.1
+
+# スクリプト構成
+structure:
+  segment_types:
+    hook:
+      icon: "🎯"
+      description: "視聴者を引き込む強烈な問いかけ・驚き"
+      duration: 5
+      example:
+        displayText: "The most valuable skill?"
+        subText: "It's not coding. It's not leadership."
+        highlightWords: ["valuable skill"]
+
+    body:
+      icon: "📌"
+      description: "メインコンテンツ・事実・例"
+      duration: 8
+      example:
+        displayText: "Deep Work"
+        subText: "Focus without distraction\non demanding tasks."
+        highlightWords: ["Deep Work"]
+
+    tip:
+      icon: "💡"
+      description: "具体的なアクション・テクニック"
+      duration: 8
+      example:
+        displayText: "Bill Gates'\n'Think Weeks'"
+        subText: "2 weeks of complete isolation"
+        highlightWords: ["Think Weeks"]
+
+    cta:
+      icon: "🔥"
+      description: "フォロー促進・次の動画への誘導"
+      duration: 6
+      example:
+        displayText: "This is your\ncompetitive edge"
+        subText: "Follow for more top strategies"
+
+  recommended_flow:
+    - "hook (1段) → body (2〜3段) → tip (1〜2段) → cta (1段)"
+    - "合計5〜7セグメント"
+
+# 対応チャンネル
+channels:
+  - bizdev-tips-en
+  - bizdev-tips-ja
+  - ai-tools-review-ja
+  - tech-news-ja
+  - trading-alpha-ja
+
+# テーマカテゴリ
+categories:
+  productivity:
+    name: "生産性・フォーカス"
+    topics:
+      - "Deep Work"
+      - "GTD"
+      - "Pomodoro"
+      - "Morning routines"
+  leadership:
+    name: "リーダーシップ"
+    topics:
+      - "Decision making"
+      - "Team building"
+      - "Feedback"
+  wealth:
+    name: "資産形成"
+    topics:
+      - "投資の基本"
+      - "複利の力"
+      - "資産と負債"
+
+# スクリプト生成ガイドライン
+prompts:
+  tone:
+    - "断言口調 — 断定的に話す"
+    - "具体例で実証する"
+    - "行動に直結するアドバイス"
+  display_text_rules:
+    - "1セグメント最大3行"
+    - "displayTextは短く（音声の要約）"
+    - "subTextは補足説明（1〜2行）"
+    - "highlightWordsは1〜2個のキーフレーズ"
+    - "iconは1つのemoji"
+  avoid:
+    - "抽象的すぎるアドバイス"
+    - "例のない主張"
+    - "7セグメントを超える長さ"
+  english_rules:
+    - "Short sentences. Active voice."
+    - "Numbers over words when possible (30 min > thirty minutes)"
+    - "Name-drop credible sources (Gates, Newport, Darwin)"

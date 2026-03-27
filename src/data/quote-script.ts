@@ -1,0 +1,70 @@
+import { QuoteConfig } from "../QuoteShort";
+
+// Sample data for stoic-wisdom / wise-quotes channels
+// Replace with generated content from YAML scripts
+export const quoteConfig: QuoteConfig = {
+  bgm: { src: "ambient_test.mp3", volume: 0.1 },
+  defaultGradient: ["#0f0c29", "#302b63"],
+  style: {
+    quoteColor: "#FFFFFF",
+    highlightColor: "#FFD700",
+    quoteFontSize: 62,
+    attributionColor: "#a0a0c8",
+  },
+  segments: [
+    {
+      id: 1,
+      quoteText: "You could leave life\nright now.",
+      attribution: "Marcus Aurelius — Meditations",
+      subtitle: "Let that determine what you do, say, and think.",
+      highlightWords: ["right now"],
+      gradient: ["#0d1b2a", "#1a2a4a"],
+      voiceFile: "01_stoic.wav",
+      durationInFrames: 120,
+      pauseAfter: 10,
+      soundEffect: "impact_whoosh.mp3",
+    },
+    {
+      id: 2,
+      quoteText: "Memento Mori.\nRemember death.",
+      attribution: "Roman Stoic tradition",
+      subtitle: "Not as a curse — as a compass.",
+      highlightWords: ["Memento Mori"],
+      gradient: ["#1a1a2e", "#16213e"],
+      voiceFile: "02_stoic.wav",
+      durationInFrames: 140,
+      pauseAfter: 10,
+    },
+    {
+      id: 3,
+      quoteText: "Death clarifies.\nIt asks: is this worth\nyour limited days?",
+      attribution: "Marcus Aurelius",
+      highlightWords: ["Death clarifies", "limited days"],
+      gradient: ["#0f3460", "#16213e"],
+      voiceFile: "03_stoic.wav",
+      durationInFrames: 160,
+      pauseAfter: 10,
+      soundEffect: "transition_pop.mp3",
+    },
+    {
+      id: 4,
+      quoteText: "When we forget we\nare mortal, we waste\ntime on trivial feuds.",
+      highlightWords: ["mortal", "trivial"],
+      gradient: ["#1a1a2e", "#302b63"],
+      voiceFile: "04_stoic.wav",
+      durationInFrames: 150,
+      pauseAfter: 10,
+    },
+    {
+      id: 5,
+      quoteText: "Live each day as if\nit were your last.\nEventually you'll be right.",
+      attribution: "Seneca",
+      highlightWords: ["last", "right"],
+      gradient: ["#0f0c29", "#24243e"],
+      voiceFile: "05_stoic.wav",
+      durationInFrames: 160,
+      pauseAfter: 30,
+      soundEffect: "transition_pop.mp3",
+    },
+  ],
+};

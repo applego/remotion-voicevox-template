@@ -1,0 +1,119 @@
+name: stoic-wisdom
+description: "ストア哲学・名言系ショート動画テンプレート"
+version: 1.0.0
+
+# Remotion composition
+remotion:
+  composition_id: QuoteShort   # uses QuoteShort.tsx
+  data_type: QuoteConfig
+
+# 動画設定
+video:
+  aspect_ratio: "9:16"
+  duration_target: 60
+  fps: 30
+  width: 1080
+  height: 1920
+
+# スタイル
+style:
+  theme: dark_philosophy
+  defaultGradient: ["#0f0c29", "#302b63"]
+  text:
+    quoteColor: "#FFFFFF"
+    highlightColor: "#FFD700"
+    quoteFontSize: 62
+    attributionColor: "#a0a0c8"
+
+# BGM
+bgm:
+  src: "ambient_test.mp3"
+  volume: 0.1
+
+# スクリプト構成
+structure:
+  segments:
+    - id: hook_quote
+      name: "フックとなる名言"
+      duration: 5
+      description: "インパクトのある短い一言でスタート"
+      display_rules:
+        - "最大20文字程度"
+        - "改行で読みやすく"
+      example:
+        quoteText: "You could leave life\nright now."
+        attribution: "Marcus Aurelius — Meditations"
+
+    - id: context
+      name: "名言の背景"
+      duration: 8
+      description: "この言葉が生まれた文脈・状況"
+      example:
+        quoteText: "Memento Mori.\nRemember death."
+        subtitle: "Not as a curse — as a compass."
+
+    - id: meaning
+      name: "深い意味"
+      duration: 12
+      description: "名言の真意・哲学的解釈"
+      example:
+        quoteText: "Death clarifies.\nIs this worth\nyour limited days?"
+
+    - id: application
+      name: "現代への応用"
+      duration: 12
+      description: "今の生活でどう活かすか"
+      example:
+        quoteText: "When we forget we\nare mortal, we waste\ntime on trivial feuds."
+        highlightWords: ["mortal", "trivial"]
+
+    - id: closing_quote
+      name: "締めの言葉"
+      duration: 8
+      description: "視聴者の心に残る一言で終わる"
+      example:
+        quoteText: "Live each day as if\nit were your last."
+        attribution: "Seneca"
+
+# 対応チャンネル
+channels:
+  - stoic-wisdom-en
+  - stoic-wisdom-ja
+  - oka-kiyoshi-en
+  - oka-kiyoshi-ja
+
+# 名言カテゴリ
+categories:
+  stoicism:
+    name: "ストア哲学"
+    philosophers:
+      - "Marcus Aurelius"
+      - "Seneca"
+      - "Epictetus"
+  eastern:
+    name: "東洋哲学"
+    philosophers:
+      - "孔子 (Confucius)"
+      - "老子 (Laozi)"
+      - "渋沢栄一"
+  modern:
+    name: "現代の知恵"
+    philosophers:
+      - "Albert Camus"
+      - "Viktor Frankl"
+
+# スクリプト生成ガイドライン
+prompts:
+  tone:
+    - "深く、しかし難解にならない"
+    - "現代人が共感できる視点"
+    - "行動を促す締め"
+  display_text_rules:
+    - "1セグメント最大3行"
+    - "1行最大16文字（日本語）/ 22文字（英語）"
+    - "highlightWordsは1〜2個"
+    - "attributionはシンプルに: 「名前 — 出典」"
+  avoid:
+    - "説教臭くなる"
+    - "哲学用語の羅列"
+    - "暗くなりすぎる"
