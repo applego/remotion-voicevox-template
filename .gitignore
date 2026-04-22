@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 out/
+output/
 
 # Remotion
 .remotion/
@@ -11,6 +12,9 @@ out/
 # Environment
 .env
 .env.local
+
+# Session management
+.ntm/
 
 # OS
 .DS_Store
