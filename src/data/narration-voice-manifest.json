@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "voiceFile": "01_narration.wav",
+    "text": "最悪の出来事を「最高の贈り物」に変える哲学がある",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 2,
+    "voiceFile": "02_narration.wav",
+    "text": "「アモル・ファティ」——ラテン語で「運命を愛せ」という意味だ。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 3,
+    "voiceFile": "03_narration.wav",
+    "text": "ストア哲学者たちはこう考えた。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 4,
+    "voiceFile": "04_narration.wav",
+    "text": "起きた出来事は変えられない。\nだが、それをどう「意味づけるか」は\n自分で決められる。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 5,
+    "voiceFile": "05_narration.wav",
+    "text": "マルクス・アウレリウスは皇帝でありながら、戦争・疫病・家族の死に直面し続けた。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 6,
+    "voiceFile": "06_narration.wav",
+    "text": "それでも彼は言った：「障害物こそが道となる」と。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 7,
+    "voiceFile": "07_narration.wav",
+    "text": "失業は——新しいキャリアへの扉。\n失恋は——自分を再発見する機会。\n失敗は——次の成功へのデータ。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 8,
+    "voiceFile": "08_narration.wav",
+    "text": "「愛する」のは諦めることではない。現実を受け入れ、そこから最善を引き出すことだ。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 9,
+    "voiceFile": "09_narration.wav",
+    "text": "マルクス・アウレリウスはこう記している：\n「障害物こそが道となる。邪魔するものが前進を助ける。」",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 10,
+    "voiceFile": "10_narration.wav",
+    "text": "今日あなたの前に現れる「障害」は何か？それを道に変えてみろ。",
+    "provider": "voicevox",
+    "speakerId": 3
+  },
+  {
+    "id": 11,
+    "voiceFile": "11_narration.wav",
+    "text": "次回はネガティブビジュアライゼーション。フォローを",
+    "provider": "voicevox",
+    "speakerId": 3
+  }
+]

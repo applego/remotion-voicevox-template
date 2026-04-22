@@ -1,98 +1,38 @@
-# wise-quotes-ja: 20260228 - 成功者の朝には秘密がある｜スティーブ・ジョブズが見ていたもの
-# Character: metan + zundamon
-# Duration target: ~60 seconds
 - id: 1
   character: zundamon
-  text: "なぜ成功者は早起きなのか？スティーブ・ジョブズの答えが衝撃的だったのだ！"
+  text: A hurricane has 150mph winds. But at its center — perfect stillness. Zen says
+    you can live there.
   scene: 1
-  pauseAfter: 11
+  pauseAfter: 8
   visual:
     type: text
-    text: "なぜ成功者は\n早起きなのか？"
-    fontSize: 72
-    color: "#ffffff"
+    text: Finding Peace in Cha
+    fontSize: 56
+    color: '#FFD700'
     animation: fadeIn
-
 - id: 2
-  character: metan
-  text: "スティーブ・ジョブズは毎朝、鏡に向かってこう問いかけていました。「もし今日が人生最後の日だとしたら、今日やろうとしていることをやりたいと思うだろうか？」"
-  scene: 1
-  pauseAfter: 23
-
+  character: zundamon
+  text: 'Thich Nhat Hanh taught: ''Peace is not the absence of storms. It is the calm
+    at the center.'' Most people chase a life without problems. Zen says that''s impossible
+    — and unnecessary. You don''t need to stop the storm. You need to find the eye.'
+  scene: 2
+  pauseAfter: 10
 - id: 3
   character: zundamon
-  text: "えぇー！毎朝そんなこと考えてたのだ！？"
-  scene: 1
-  pauseAfter: 10
-
-- id: 4
-  character: metan
-  text: "この習慣から3つのことが分かります。まず、時間の尊さを毎日意識していること。"
+  text: How? Breath. One conscious breath is all it takes to shift from reaction to
+    observation. You're in traffic — breathe. Your inbox is exploding — breathe. Your
+    kid is screaming — breathe. The chaos doesn't change. Your relationship to it
+    does.
   scene: 2
-  pauseAfter: 12
-  visual:
-    type: text
-    text: "この習慣から3つのことが分かります。\n"
-    fontSize: 64
-    color: "#ffffff"
-    animation: slideUp
-
+  pauseAfter: 10
+- id: 4
+  character: zundamon
+  text: Today's practice. When chaos arrives — and it will — take one breath before
+    reacting. Just one. Feel the eye of the storm. That's where you live now.
+  scene: 2
+  pauseAfter: 10
 - id: 5
   character: zundamon
-  text: "確かに、時間は取り戻せないのだ！"
-  scene: 2
-  pauseAfter: 10
-
-- id: 6
-  character: metan
-  text: "二つ目は、自分の選択に責任を持つこと。そして三つ目は、本当に大切なことだけに集中すること、です。"
-  scene: 2
-  pauseAfter: 15
-
-- id: 7
-  character: zundamon
-  text: "でも、普通の人はどうすればいいのだ？"
+  text: Daily calm in 60 seconds. Follow.
   scene: 3
-  pauseAfter: 10
-  visual:
-    type: text
-    text: "でも、\n普通の人はどうすればいいのだ？"
-    fontSize: 56
-    color: "#ffffff"
-    animation: fadeIn
-
-- id: 8
-  character: metan
-  text: "まず朝起きたら「今日、本当に大切なことは何か？」と自分に問いかけてみてください。そして「もし今日が最後なら、この予定は本当に必要か？」と考えるんです。"
-  scene: 3
-  pauseAfter: 23
-
-- id: 9
-  character: zundamon
-  text: "なるほど〜！不要なことを削って、大切なことに時間を使うのだ！"
-  scene: 3
-  pauseAfter: 10
-
-- id: 10
-  character: metan
-  text: "ジョブズのこの習慣は、単なる早起きではなく「意識的に生きる」ということなんですね。毎日の選択に責任を持ち、限られた時間を最大限に活用する。これが成功者の朝の秘密です。"
-  scene: 4
-  pauseAfter: 25
-  visual:
-    type: text
-    text: "ジョブズのこの習慣は、"
-    fontSize: 56
-    color: "#FFD700"
-    animation: fadeIn
-
-- id: 11
-  character: zundamon
-  text: "明日の朝、鏡に向かって問いかけてみるのだ！役に立ったら👍とチャンネル登録もお願いするのだ〜✨"
-  scene: 4
-  pauseAfter: 14
-  visual:
-    type: text
-    text: "明日の朝、"
-    fontSize: 56
-    color: "#FFD700"
-    animation: fadeIn
+  pauseAfter: 12

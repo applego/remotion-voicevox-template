@@ -7,7 +7,11 @@ import { Character } from "./components/Character";
 import { SceneVisuals } from "./components/SceneVisuals";
 
 // Google Fontsをロード
-const { fontFamily } = loadFont();
+// CJK フォントは unicode-range 分割で多数リクエストが発生するが正常動作
+// weights を必要最小限に絞ることでリクエスト数を削減 (882 → 252)
+const { fontFamily } = loadFont("normal", {
+  weights: ["700", "900"],
+});
 
 // 再生速度を考慮したフレーム数を計算
 const getAdjustedFrames = (frames: number): number =>

@@ -4,12 +4,19 @@ import { TriviaShort } from "./TriviaShort";
 import { QuoteShort } from "./QuoteShort";
 import { NarrationShort } from "./NarrationShort";
 import { KidsShort } from "./KidsShort";
+import { IrasutoyaShort, IrasutoyaConfig } from "./IrasutoyaShort";
+import { VideoBackgroundShort, VideoBgConfig } from "./VideoBackgroundShort";
+import { AbatarouShort } from "./AbatarouShort";
+import { OkasanDemo } from "./OkasanDemo";
 import { scriptData } from "./data/script";
 import { triviaConfig } from "./data/trivia-script";
 import { quoteConfig } from "./data/quote-script";
 import { narrationConfig } from "./data/narration-script";
 import { kidsConfig } from "./data/kids-script";
+import { irasutoyaConfig } from "./data/irasutoya-script";
+import { abatarouConfig } from "./data/abatarou-script";
 import { VIDEO_CONFIG } from "./config";
+import { getInputProps } from "remotion";
 
 // ─── Frame calculators ──────────────────────────────────
 
@@ -43,6 +50,24 @@ export const RemotionRoot: React.FC = () => {
   const quoteFrames = calcSegmentFrames(quoteConfig.segments);
   const narrationFrames = calcSegmentFrames(narrationConfig.segments);
   const kidsFrames = calcSegmentFrames(kidsConfig.segments);
+  // --props から受け取った場合はそちらを優先、なければ irasutoya-script.ts のデフォルト
+  const inputProps = getInputProps() as Partial<IrasutoyaConfig>;
+  const activeIrasutoyaConfig: IrasutoyaConfig =
+    inputProps.segments && inputProps.segments.length > 0
+      ? (inputProps as IrasutoyaConfig)
+      : irasutoyaConfig;
+  const transitionFrames = activeIrasutoyaConfig.transition_frames ?? 12;
+  const irasutoyaSegCount = activeIrasutoyaConfig.segments.length;
+  // IrasutoyaSegment は duration/pause フィールドを使用（durationInFrames/pauseAfter とは別）
+  const irasutoyaRawFrames = activeIrasutoyaConfig.segments.reduce(
+    (acc, s) => acc + (s.duration ?? 0) + (s.pause ?? 0),
+    15 + 30 // head + tail padding
+  );
+  // TransitionSeries はセグメント間でオーバーラップする分を引く
+  const irasutoyaFrames = Math.max(
+    60,
+    irasutoyaRawFrames - Math.max(0, irasutoyaSegCount - 1) * transitionFrames
+  );
 
   return (
     <>
@@ -99,6 +124,65 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+      />
+
+      {/* ─── IrasutoyaShort: 偉人転換点 (portrait 9:16) ─────── */}
+      {/* 用途: great-figures-ja, trivia-facts-ja             */}
+      {/* 白背景 + 実写/いらすとや + 上問い・下答えサンドイッチ  */}
+      <Composition
+        id="IrasutoyaShort"
+        component={() => <IrasutoyaShort config={activeIrasutoyaConfig} />}
+        durationInFrames={irasutoyaFrames}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
+      {/* ─── AbatarouShort: アバタロー型 知的解説 (16:9) ──────── */}
+      {/* 用途: wise-quotes-ja (アバタロー模倣), 人物紹介, 書籍紹介 */}
+      {/* 暗背景 + 大テキスト中央 + 話者別色分け + ゆっくりフェード */}
+      <Composition
+        id="AbatarouShort"
+        component={() => <AbatarouShort config={abatarouConfig} />}
+        durationInFrames={calcSegmentFrames(abatarouConfig.segments)}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ─── AbatarouVertical: アバタロー型 縦型版 (9:16) ──────── */}
+      <Composition
+        id="AbatarouVertical"
+        component={() => <AbatarouShort config={abatarouConfig} />}
+        durationInFrames={calcSegmentFrames(abatarouConfig.segments)}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
+      {/* ─── VideoBackgroundShort: 動画背景 + 自然TTS (9:16) ── */}
+      {/* 用途: wise-quotes V2, stoic-wisdom (video bg)        */}
+      {/* stock映像 or AI映像を背景に。Ken Burns効果付き。    */}
+      {/* inputProps で VideoBgConfig を受け取る               */}
+      <Composition
+        id="VideoBackgroundShort"
+        component={VideoBackgroundShort}
+        durationInFrames={quoteFrames}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={
+          getInputProps() as Partial<VideoBgConfig> || quoteConfig
+        }
+      />
+      {/* ─── OkasanDemo: 2.5Dレイヤーアニメ (9:16) ─────────── */}
+      <Composition
+        id="OkasanDemo"
+        component={OkasanDemo}
+        durationInFrames={240}
+        fps={30}
+        width={720}
+        height={1280}
       />
     </>
   );

@@ -1,0 +1,83 @@
+name: picture-book
+description: "絵本読み聞かせ・朗読向けテンプレート (TriviaShort Composition ベース)"
+version: 1.0.0
+
+# Video settings
+video:
+  aspect_ratio: "9:16"
+  duration_target: 300
+  fps: 30
+  composition: TriviaShort
+
+# Character settings
+characters:
+  primary:
+    id: metan
+    role: narrator
+    style: "gentle, warm"
+    personality: "Calm storyteller voice for bedtime or reading"
+
+# Theme & style
+style:
+  theme: storybook
+  colors:
+    background: "#FFF8E7"
+    text: "#4A3728"
+    accent: "#E8A87C"
+    highlight: "#D4A574"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 60
+    weight: "700"
+  animation:
+    ken_burns: true
+    transition: "fade"
+    transition_speed: "slow"
+
+# Script structure
+structure:
+  sections:
+    - id: cover
+      name: "Cover page"
+      duration: 5
+      description: "Title card with book cover illustration"
+      visual: "Fullscreen illustration + title text overlay"
+
+    - id: pages
+      name: "Story pages"
+      duration: 250
+      description: "Sequential story pages with narration"
+      visual: "One AI-generated illustration per page, Ken Burns zoom"
+      notes: "Each page = 1 illustration + narration segment"
+
+    - id: ending
+      name: "Ending"
+      duration: 10
+      description: "Warm closing with gentle message"
+      visual: "Final illustration, fade to soft background"
+
+    - id: outro
+      name: "Outro"
+      duration: 5
+      description: "Channel branding and subscribe prompt"
+      visual: "Logo + next story preview"
+
+# Script generation guidelines
+prompts:
+  tone:
+    - "Warm and gentle, suitable for bedtime"
+    - "Simple vocabulary for young children"
+    - "Rhythmic, repetitive phrasing for engagement"
+  avoid:
+    - "Scary or violent content"
+    - "Complex sentence structures"
+    - "Fast pacing"
+  include:
+    - "Vivid visual descriptions for illustration prompts"
+    - "Emotional beats (curiosity, wonder, comfort)"
+    - "Gentle moral or lesson woven naturally"
+
+# Applicable channels
+channels:
+  - kids-ehon-ja
+  - novel-reading-ja

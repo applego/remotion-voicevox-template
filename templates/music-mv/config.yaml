@@ -1,0 +1,84 @@
+name: music-mv
+description: "Music video / MV template (TriviaShort Composition base)"
+version: 1.0.0
+
+# Video settings
+video:
+  aspect_ratio: "9:16"
+  duration_target: 180
+  fps: 30
+  composition: TriviaShort
+
+# Character settings
+characters:
+  primary:
+    id: custom
+    role: vocalist
+    style: "Song-dependent"
+    personality: "Matches song mood"
+
+# Theme & style
+style:
+  theme: cinematic
+  colors:
+    background: "#0A0A0A"
+    text: "#FFFFFF"
+    accent: "#8B5CF6"
+    highlight: "#EC4899"
+  font:
+    family: "M PLUS Rounded 1c"
+    size: 55
+    weight: "800"
+  animation:
+    ken_burns: true
+    transition: "crossfade"
+    transition_speed: "medium"
+    sync_to_beat: true
+
+# Script structure
+structure:
+  sections:
+    - id: intro
+      name: "Visual intro"
+      duration: 5
+      description: "Atmospheric opening visual before vocals begin"
+      visual: "Mood-setting image with title text"
+
+    - id: verses
+      name: "Song body"
+      duration: 150
+      description: "Lyrics synced with visual scenes"
+      visual: "AI-generated scene illustrations matching lyrics"
+      notes: "Each verse/chorus = distinct visual scene"
+
+    - id: climax
+      name: "Visual climax"
+      duration: 15
+      description: "Most impactful visual for emotional peak"
+      visual: "Dynamic image with highlight effects"
+
+    - id: outro
+      name: "Credits / outro"
+      duration: 10
+      description: "Song title, credits, channel branding"
+      visual: "Fade out with credits overlay"
+
+# Script generation guidelines
+prompts:
+  tone:
+    - "Visual descriptions should match song emotion"
+    - "Lyrics are the primary content"
+    - "Imagery should enhance, not distract from music"
+  avoid:
+    - "Overly literal visual interpretation of lyrics"
+    - "Cluttered text overlays during vocals"
+    - "Inconsistent visual style within one MV"
+  include:
+    - "Color palette matching song mood"
+    - "Visual motifs that recur across scenes"
+    - "Lyric highlights for key phrases"
+
+# Applicable channels
+channels:
+  - dark-vocal-ja
+  - kids-songs-ja

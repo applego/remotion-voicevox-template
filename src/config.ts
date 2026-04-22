@@ -20,10 +20,11 @@ export const COLORS = {
   pink: "#ec4899",
   zundamon: "#228B22",        // フォレストグリーン（暗め）
   metan: "#FF1493",           // ディープピンク
+  chibi_jii: "#A0522D",      // シエナ（親しみやすさ・温かみ）
 };
 
 // キャラクター定義
-export type CharacterId = "zundamon" | "metan";
+export type CharacterId = "zundamon" | "metan" | "chibi_jii";
 
 export interface CharacterConfig {
   id: CharacterId;
@@ -66,12 +67,25 @@ export const DEFAULT_CHARACTERS: CharacterConfig[] = [
     },
     flipX: false,
   },
+  {
+    id: "chibi_jii",
+    name: "ちび式じい",
+    voicevoxSpeakerId: 42,
+    position: "right",
+    color: COLORS.chibi_jii,
+    images: {
+      mouthOpen: "images/chibi_jii/mouth_open.png",
+      mouthClose: "images/chibi_jii/mouth_close.png",
+    },
+    flipX: false,
+  },
 ];
 
 // キャラクターIDからspeakerIdを取得するマップ
 export const characterSpeakerMap: Record<CharacterId, number> = {
   zundamon: 3,
   metan: 2,
+  chibi_jii: 42,
 };
 
 // シーン背景タイプ

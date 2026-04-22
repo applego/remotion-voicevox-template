@@ -62,165 +62,55 @@ export const scenes: SceneInfo[] = [
 export const scriptData: ScriptLine[] = [
   {
     "id": 1,
-    "character": "announcer",
-    "text": "あなたの人生を変える、たった一つの言葉があります",
+    "character": "zundamon",
+    "text": "A hurricane has 150mph winds. But at its center — perfect stillness. Zen says you can live there.",
     "scene": 1,
-    "pauseAfter": 20,
+    "pauseAfter": 8,
     "visual": {
       "type": "text",
-      "text": "あなたの人生を変える\nたった一つの言葉",
-      "fontSize": 72,
-      "color": "#ffffff",
+      "text": "Finding Peace in Cha",
+      "fontSize": 56,
+      "color": "#FFD700",
       "animation": "fadeIn"
     },
-    "voiceFile": "01_announcer.wav",
-    "durationInFrames": 130
+    "voiceFile": "01_zundamon.wav",
+    "durationInFrames": 329
   },
   {
     "id": 2,
-    "character": "announcer",
-    "text": "多くの人は、成功するために何か特別なことが必要だと思っています",
+    "character": "zundamon",
+    "text": "Thich Nhat Hanh taught: 'Peace is not the absence of storms. It is the calm at the center.' Most people chase a life without problems. Zen says that's impossible — and unnecessary. You don't need to stop the storm. You need to find the eye.",
     "scene": 2,
-    "pauseAfter": 15,
-    "visual": {
-      "type": "text",
-      "text": "成功には\n特別なことが必要？",
-      "fontSize": 64,
-      "color": "#ffffff",
-      "animation": "slideUp"
-    },
-    "voiceFile": "02_announcer.wav",
-    "durationInFrames": 179
+    "pauseAfter": 10,
+    "voiceFile": "02_zundamon.wav",
+    "durationInFrames": 800
   },
   {
     "id": 3,
-    "character": "announcer",
-    "text": "でも、実は...",
+    "character": "zundamon",
+    "text": "How? Breath. One conscious breath is all it takes to shift from reaction to observation. You're in traffic — breathe. Your inbox is exploding — breathe. Your kid is screaming — breathe. The chaos doesn't change. Your relationship to it does.",
     "scene": 2,
-    "pauseAfter": 25,
-    "voiceFile": "03_announcer.wav",
-    "durationInFrames": 47
+    "pauseAfter": 10,
+    "voiceFile": "03_zundamon.wav",
+    "durationInFrames": 758
   },
   {
     "id": 4,
-    "character": "announcer",
-    "text": "成功と失敗の違いは、たった一つの習慣から生まれるのです",
+    "character": "zundamon",
+    "text": "Today's practice. When chaos arrives — and it will — take one breath before reacting. Just one. Feel the eye of the storm. That's where you live now.",
     "scene": 2,
-    "pauseAfter": 20,
-    "visual": {
-      "type": "text",
-      "text": "違いは\nたった一つの「習慣」",
-      "fontSize": 72,
-      "color": "#FFD700",
-      "animation": "zoomIn"
-    },
-    "voiceFile": "04_announcer.wav",
-    "durationInFrames": 158
+    "pauseAfter": 10,
+    "voiceFile": "04_zundamon.wav",
+    "durationInFrames": 641
   },
   {
     "id": 5,
-    "character": "announcer",
-    "text": "アリストテレスはこう言いました",
+    "character": "zundamon",
+    "text": "Daily calm in 60 seconds. Follow.",
     "scene": 3,
-    "pauseAfter": 15,
-    "visual": {
-      "type": "text",
-      "text": "アリストテレス\n（古代ギリシャ哲学者）",
-      "fontSize": 56,
-      "color": "#ffffff",
-      "animation": "fadeIn"
-    },
-    "voiceFile": "05_announcer.wav",
-    "durationInFrames": 68
-  },
-  {
-    "id": 6,
-    "character": "announcer",
-    "text": "私たちは繰り返し行うことの集積である。だから優秀さとは、行為ではなく習慣なのだ",
-    "scene": 3,
-    "pauseAfter": 30,
-    "visual": {
-      "type": "text",
-      "text": "「優秀さとは\n行為ではなく習慣なのだ」\n— アリストテレス",
-      "fontSize": 56,
-      "color": "#FFD700",
-      "animation": "fadeIn"
-    },
-    "voiceFile": "06_announcer.wav",
-    "durationInFrames": 234
-  },
-  {
-    "id": 7,
-    "character": "announcer",
-    "text": "つまり、今日あなたが繰り返し選ぶ小さな行動が、明日のあなたを形作るのです",
-    "scene": 4,
-    "pauseAfter": 20,
-    "visual": {
-      "type": "text",
-      "text": "今日の小さな行動が\n明日のあなたを作る",
-      "fontSize": 64,
-      "color": "#ffffff",
-      "animation": "slideUp"
-    },
-    "voiceFile": "07_announcer.wav",
-    "durationInFrames": 212
-  },
-  {
-    "id": 8,
-    "character": "announcer",
-    "text": "朝の5分の読書。夜の10分の振り返り。毎日の感謝の言葉。",
-    "scene": 4,
-    "pauseAfter": 15,
-    "visual": {
-      "type": "text",
-      "text": "朝5分の読書\n夜10分の振り返り\n毎日の感謝",
-      "fontSize": 56,
-      "color": "#90EE90",
-      "animation": "slideLeft"
-    },
-    "voiceFile": "08_announcer.wav",
-    "durationInFrames": 185
-  },
-  {
-    "id": 9,
-    "character": "announcer",
-    "text": "これらの小さな習慣が、あなたの人生を根本から変えていきます",
-    "scene": 4,
-    "pauseAfter": 20,
-    "voiceFile": "09_announcer.wav",
-    "durationInFrames": 166
-  },
-  {
-    "id": 10,
-    "character": "announcer",
-    "text": "今日から始めませんか？たった一つでいい。繰り返せる小さな習慣を。",
-    "scene": 5,
-    "pauseAfter": 20,
-    "visual": {
-      "type": "text",
-      "text": "今日から始めよう\nたった一つの習慣を",
-      "fontSize": 72,
-      "color": "#FFD700",
-      "animation": "zoomIn"
-    },
-    "voiceFile": "10_announcer.wav",
-    "durationInFrames": 188
-  },
-  {
-    "id": 11,
-    "character": "announcer",
-    "text": "あなたの未来は、今この瞬間の選択から始まります",
-    "scene": 5,
-    "pauseAfter": 30,
-    "visual": {
-      "type": "text",
-      "text": "未来は\n今この瞬間の選択から",
-      "fontSize": 64,
-      "color": "#ffffff",
-      "animation": "fadeIn"
-    },
-    "voiceFile": "11_announcer.wav",
-    "durationInFrames": 138
+    "pauseAfter": 12,
+    "voiceFile": "05_zundamon.wav",
+    "durationInFrames": 132
   }
 ];
 
