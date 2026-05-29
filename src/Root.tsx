@@ -8,6 +8,12 @@ import { IrasutoyaShort, IrasutoyaConfig } from "./IrasutoyaShort";
 import { VideoBackgroundShort, VideoBgConfig } from "./VideoBackgroundShort";
 import { AbatarouShort } from "./AbatarouShort";
 import { OkasanDemo } from "./OkasanDemo";
+import {
+  MusicMV,
+  MusicMVConfig,
+  calculateMusicMVFrames,
+  defaultMusicMVConfig,
+} from "./MusicMV";
 import { scriptData } from "./data/script";
 import { triviaConfig } from "./data/trivia-script";
 import { quoteConfig } from "./data/quote-script";
@@ -45,13 +51,14 @@ const calcSegmentFrames = (
 };
 
 export const RemotionRoot: React.FC = () => {
+  const rootInputProps = getInputProps() as Record<string, unknown>;
   const mainFrames = calculateMainFrames();
   const triviaFrames = calcSegmentFrames(triviaConfig.frames);
   const quoteFrames = calcSegmentFrames(quoteConfig.segments);
   const narrationFrames = calcSegmentFrames(narrationConfig.segments);
   const kidsFrames = calcSegmentFrames(kidsConfig.segments);
   // --props から受け取った場合はそちらを優先、なければ irasutoya-script.ts のデフォルト
-  const inputProps = getInputProps() as Partial<IrasutoyaConfig>;
+  const inputProps = rootInputProps as Partial<IrasutoyaConfig>;
   const activeIrasutoyaConfig: IrasutoyaConfig =
     inputProps.segments && inputProps.segments.length > 0
       ? (inputProps as IrasutoyaConfig)
@@ -68,6 +75,12 @@ export const RemotionRoot: React.FC = () => {
     60,
     irasutoyaRawFrames - Math.max(0, irasutoyaSegCount - 1) * transitionFrames
   );
+  const activeMusicMVConfig: MusicMVConfig =
+    rootInputProps.adapter === "youtube-channel-harness/music-mv" &&
+    Array.isArray(rootInputProps.visualClips)
+      ? (rootInputProps as unknown as MusicMVConfig)
+      : defaultMusicMVConfig;
+  const musicMVFrames = calculateMusicMVFrames(activeMusicMVConfig, 30);
 
   return (
     <>
@@ -174,6 +187,15 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={
           getInputProps() as Partial<VideoBgConfig> || quoteConfig
         }
+      />
+      {/* ─── MusicMV: channel-harness music video preview (16:9) ── */}
+      <Composition
+        id="MusicMV"
+        component={() => <MusicMV config={activeMusicMVConfig} />}
+        durationInFrames={musicMVFrames}
+        fps={30}
+        width={1920}
+        height={1080}
       />
       {/* ─── OkasanDemo: 2.5Dレイヤーアニメ (9:16) ─────────── */}
       <Composition
