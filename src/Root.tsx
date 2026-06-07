@@ -8,6 +8,7 @@ import { IrasutoyaShort, IrasutoyaConfig } from "./IrasutoyaShort";
 import { VideoBackgroundShort, VideoBgConfig } from "./VideoBackgroundShort";
 import { AbatarouShort } from "./AbatarouShort";
 import { OkasanDemo } from "./OkasanDemo";
+import { TemplateGallery } from "./TemplateGallery";
 import {
   MusicMV,
   MusicMVConfig,
@@ -205,6 +206,16 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={720}
         height={1280}
+      />
+
+      {/* ─── TemplateGallery: 5 reusable Remotion templates catalog ── */}
+      <Composition
+        id="TemplateGallery"
+        component={TemplateGallery}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
