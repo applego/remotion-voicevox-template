@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Video,
   interpolate,
   staticFile,
@@ -168,7 +169,7 @@ const resolveMediaSource = (src: string) => {
     return trimmed;
   }
   if (trimmed.startsWith("/")) {
-    return `file://${trimmed}`;
+    return typeof window === "undefined" ? `file://${trimmed}` : trimmed;
   }
   return staticFile(trimmed.replace(/^\.?\//, "").replace(/^public\//, ""));
 };
@@ -179,6 +180,7 @@ export const MusicMV: React.FC<{ config: MusicMVConfig }> = ({ config }) => {
   const { clip, localFrame, duration } = pickCurrentClip(config, frame, fps);
   const palette = paletteForSection(clip.section);
   const clipSource = config.dry_run ? null : resolveMediaSource(clip.src);
+  const audioSource = resolveMediaSource(config.audio.src);
   const isDiagnosticPreview = config.dry_run || !clipSource;
   const progress = Math.min(1, localFrame / Math.max(1, duration));
   const titleOpacity = interpolate(localFrame, [0, fps * 0.8], [0, 1], {
@@ -212,6 +214,7 @@ export const MusicMV: React.FC<{ config: MusicMVConfig }> = ({ config }) => {
           }}
         />
       ) : null}
+      {audioSource ? <Audio src={audioSource} /> : null}
       {isDiagnosticPreview ? (
         <>
           <div
