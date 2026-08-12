@@ -10,7 +10,9 @@ import {
 } from "remotion";
 import { loadFont } from "@remotion/google-fonts/NotoSansJP";
 
-const { fontFamily } = loadFont("normal", { weights: ["400", "700", "900"] });
+const fontFamily = typeof window === "undefined"
+  ? loadFont("normal", { weights: ["400", "700", "900"] }).fontFamily
+  : "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 
 export interface MusicMVVisualClip {
   id: string;
