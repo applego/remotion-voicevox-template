@@ -41,6 +41,7 @@ interface VoiceManifestEntry {
   provider?: string;   // "voicevox" | "qwen3_tts" (default: "voicevox")
   refAudio?: string;   // Qwen3-TTS: reference audio path for voice cloning
   refText?: string;    // Qwen3-TTS: reference audio transcript
+  speedScale?: number; // VOICEVOX narration speed from tools.tts.voice_speed
 }
 
 function sleep(ms: number): Promise<void> {
@@ -76,14 +77,26 @@ async function ensureVoicevox(maxRetries = 3): Promise<boolean> {
   return false;
 }
 
-async function getAudioQuery(text: string, speakerId: number): Promise<any> {
+async function getAudioQuery(
+  text: string,
+  speakerId: number,
+  speedScale?: number
+): Promise<any> {
   const encoded = encodeURIComponent(text);
   const res = await fetch(
     `${VOICEVOX_HOST}/audio_query?speaker=${speakerId}&text=${encoded}`,
     { method: "POST" }
   );
   if (!res.ok) throw new Error(`audio_query failed: ${res.statusText}`);
-  return res.json();
+  const query = await res.json();
+  // The Shorts playbook builds retention on fast delivery, and channel configs say so
+  // in `tools.tts.voice_speed`. Until 2026-08-20 the query went to /synthesis exactly
+  // as returned, so that setting did nothing and every channel spoke at 1.0x — the
+  // first six Shorts renders came out 91-207s against scripts written for 50-55s.
+  if (typeof speedScale === "number" && Number.isFinite(speedScale) && speedScale > 0) {
+    query.speedScale = speedScale;
+  }
+  return query;
 }
 
 async function synthesize(query: any, speakerId: number): Promise<ArrayBuffer> {
@@ -222,7 +235,7 @@ async function main() {
       // Use VOICEVOX (primary or fallback)
       if (!generated) {
         const speakerId = entry.speakerId ?? 3;
-        const query = await getAudioQuery(entry.text, speakerId);
+        const query = await getAudioQuery(entry.text, speakerId, entry.speedScale);
         const audio = await synthesize(query, speakerId);
         fs.writeFileSync(outputPath, Buffer.from(audio));
         generated = true;
