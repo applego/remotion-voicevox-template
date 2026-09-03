@@ -145,6 +145,8 @@ export const sceneLightFor = (segmentIndex: number): string => {
   return `radial-gradient(circle at ${pos}, ${color} 0%, rgba(0,0,0,0) 62%)`;
 };
 const DEFAULT_STYLE = {
+  /** Scene backgrounds and the moving light. Set false for a single ground. */
+  sceneBackgrounds: true as boolean,
   accentColor: "#4FC3F7",
   bgColor: "#0d1b2a",
   bodyFontSize: 52,
@@ -417,12 +419,19 @@ export const NarrationShort: React.FC<{ config: NarrationConfig }> = ({
     }
   }
 
-  // An explicit per-segment colour still wins; otherwise the scene decides.
-  // SEGMENT_COLORS is kept as the last fallback so existing callers that set a
-  // type but no scene grouping behave as before.
+  // Scenes are on by default: every NarrationShort channel had the same
+  // one-static-frame problem. A channel that deliberately wants a single
+  // ground can say so with `style.sceneBackgrounds: false`, and then the old
+  // chain applies unchanged — that opt-out is what keeps SEGMENT_COLORS and
+  // `style.bgColor` reachable rather than dead.
+  //
+  // Without the opt-out this silently overrode the per-channel `style.bgColor`
+  // that yaml_to_narration_config.py sets, which is a behaviour change no
+  // channel asked for.
+  const scenesEnabled = style.sceneBackgrounds !== false;
   const bgColor =
     currentSegment.bgColor ??
-    sceneBackgroundFor(currentIdx) ??
+    (scenesEnabled ? sceneBackgroundFor(currentIdx) : undefined) ??
     SEGMENT_COLORS[currentSegment.type] ??
     style.bgColor;
   const hasImage = Boolean(currentSegment.imageSrc);
@@ -430,10 +439,13 @@ export const NarrationShort: React.FC<{ config: NarrationConfig }> = ({
   return (
     <AbsoluteFill style={{ backgroundColor: bgColor }}>
       {/* Scene light: the large soft area that actually makes a cut read as a
-          cut. Sits above the flat background and below everything else. */}
-      <AbsoluteFill
-        style={{ background: sceneLightFor(currentIdx), pointerEvents: "none" }}
-      />
+          cut. Sits above the flat background and below everything else.
+          Follows the same opt-out as the scene backgrounds. */}
+      {scenesEnabled && (
+        <AbsoluteFill
+          style={{ background: sceneLightFor(currentIdx), pointerEvents: "none" }}
+        />
+      )}
 
       {/* Image section (top half) */}
       {hasImage && currentSegment.imageSrc && (

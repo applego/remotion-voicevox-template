@@ -144,3 +144,37 @@ describe("the cut cadence this aims at", () => {
     expect(interval).toBeLessThanOrEqual(18.484);
   });
 });
+
+describe("the opt-out keeps the old behaviour reachable", () => {
+  // Without it, sceneBackgroundFor always returns a colour and the
+  // SEGMENT_COLORS / style.bgColor chain below it is dead code — and, worse,
+  // the per-channel style.bgColor that yaml_to_narration_config.py sets is
+  // silently overridden for every channel (#1 review).
+  const resolve = (
+    segmentBg: string | undefined,
+    scenesEnabled: boolean,
+    typeColor: string | undefined,
+    styleBg: string,
+    index: number,
+  ) =>
+    segmentBg ??
+    (scenesEnabled ? sceneBackgroundFor(index) : undefined) ??
+    typeColor ??
+    styleBg;
+
+  it("uses the scene colour when scenes are on", () => {
+    expect(resolve(undefined, true, "#111111", "#222222", 0)).toBe(
+      sceneBackgroundFor(0),
+    );
+  });
+
+  it("falls back to the channel's own colours when scenes are off", () => {
+    expect(resolve(undefined, false, "#111111", "#222222", 0)).toBe("#111111");
+    expect(resolve(undefined, false, undefined, "#222222", 0)).toBe("#222222");
+  });
+
+  it("always lets an explicit per-segment colour win", () => {
+    expect(resolve("#abcdef", true, "#111111", "#222222", 0)).toBe("#abcdef");
+    expect(resolve("#abcdef", false, "#111111", "#222222", 0)).toBe("#abcdef");
+  });
+});
