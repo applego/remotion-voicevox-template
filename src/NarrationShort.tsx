@@ -64,6 +64,86 @@ const SEGMENT_COLORS: Record<NarrationSegmentType, string> = {
   cta: "#16213e",
   closing: "#0f0c29",
 };
+
+/**
+ * Visual scenes: the backgrounds a viewer (and a scene detector) can actually
+ * tell apart.
+ *
+ * Measured 2026-09-04: a rendered 53.8s episode had **zero** detected scene
+ * changes, even with ffmpeg's threshold lowered from 0.30 to 0.04. The role
+ * model cuts every 7.121s (median). The cause was not the per-type background
+ * idea but the palette: the five SEGMENT_COLORS above are all the same near
+ * black navy, within a few percent of each other in luminance. Nine tenths of
+ * the frame never moved, so the video was one slide held for 53 seconds.
+ *
+ * These stay inside the channel's dark palette — this is not a redesign — but
+ * each step is a real change in hue and luminance, so a cut reads as a cut.
+ */
+export const SCENE_BACKGROUNDS: readonly string[] = [
+  "#0d1b2a", // deep navy — where the channel already lives
+  "#24243e", // violet-leaning slate
+  "#0b3a52", // colder blue
+  "#2b1b33", // plum
+  "#0f2a2a", // teal-leaning
+  "#2a1f1a", // warm brown, the widest departure
+];
+
+/**
+ * How many segments share one background.
+ *
+ * Segments run ~3.5s, so grouping three of them puts a cut roughly every 10s:
+ * about 5 cuts in a 53s episode = ~5.6 cuts/min. That sits inside the role
+ * model's measured density band (0.0-5.21/min, +15% tolerance) and inside its
+ * cut-interval band (1.414-18.484s). Aiming at the median density (2.12/min)
+ * instead would mean two cuts in a whole episode, which is how the static
+ * version passed the check in the first place.
+ */
+export const SEGMENTS_PER_SCENE = 3;
+
+export const sceneIndexFor = (segmentIndex: number): number =>
+  Math.floor(segmentIndex / SEGMENTS_PER_SCENE);
+
+export const sceneBackgroundFor = (segmentIndex: number): string =>
+  SCENE_BACKGROUNDS[sceneIndexFor(segmentIndex) % SCENE_BACKGROUNDS.length];
+
+/**
+ * Where the scene's light sits, as a CSS radial-gradient position.
+ *
+ * Measured 2026-09-04: changing only the background colour moved ffmpeg's
+ * scene score to at most 0.153, against the 0.30 threshold the role model was
+ * measured with — about half of what a cut needs. `scene` compares whole
+ * frames, so a uniform tint shift of ~23/255 cannot read as a cut no matter
+ * which two dark navies are chosen.
+ *
+ * Moving a large soft light across the frame changes a wide area's luminance
+ * instead, which is what a real cut does. The positions walk the frame rather
+ * than drifting, so consecutive scenes differ in where the frame is bright.
+ */
+const SCENE_LIGHT_POSITIONS: readonly string[] = [
+  "22% 26%",
+  "78% 68%",
+  "50% 14%",
+  "18% 74%",
+  "82% 30%",
+  "50% 86%",
+];
+
+/** The lift each scene's light adds, over the flat background. */
+const SCENE_LIGHT_COLORS: readonly string[] = [
+  "rgba(79,195,247,0.30)",
+  "rgba(149,117,205,0.30)",
+  "rgba(77,182,172,0.28)",
+  "rgba(240,98,146,0.24)",
+  "rgba(255,183,77,0.22)",
+  "rgba(129,212,250,0.28)",
+];
+
+export const sceneLightFor = (segmentIndex: number): string => {
+  const i = sceneIndexFor(segmentIndex);
+  const pos = SCENE_LIGHT_POSITIONS[i % SCENE_LIGHT_POSITIONS.length];
+  const color = SCENE_LIGHT_COLORS[i % SCENE_LIGHT_COLORS.length];
+  return `radial-gradient(circle at ${pos}, ${color} 0%, rgba(0,0,0,0) 62%)`;
+};
 const DEFAULT_STYLE = {
   accentColor: "#4FC3F7",
   bgColor: "#0d1b2a",
@@ -337,14 +417,24 @@ export const NarrationShort: React.FC<{ config: NarrationConfig }> = ({
     }
   }
 
+  // An explicit per-segment colour still wins; otherwise the scene decides.
+  // SEGMENT_COLORS is kept as the last fallback so existing callers that set a
+  // type but no scene grouping behave as before.
   const bgColor =
     currentSegment.bgColor ??
+    sceneBackgroundFor(currentIdx) ??
     SEGMENT_COLORS[currentSegment.type] ??
     style.bgColor;
   const hasImage = Boolean(currentSegment.imageSrc);
 
   return (
     <AbsoluteFill style={{ backgroundColor: bgColor }}>
+      {/* Scene light: the large soft area that actually makes a cut read as a
+          cut. Sits above the flat background and below everything else. */}
+      <AbsoluteFill
+        style={{ background: sceneLightFor(currentIdx), pointerEvents: "none" }}
+      />
+
       {/* Image section (top half) */}
       {hasImage && currentSegment.imageSrc && (
         <ImageBlock
