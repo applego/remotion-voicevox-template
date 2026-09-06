@@ -14,46 +14,8 @@ import { loadFont } from "@remotion/google-fonts/NotoSansJP";
 const { fontFamily } = loadFont("normal", { weights: ["400", "700", "900"] });
 
 // ─── Types ─────────────────────────────────────────────
-export interface VideoBgSegment {
-  id: number;
-  quoteText: string;
-  attribution?: string;
-  subtitle?: string;
-  highlightWords?: string[];
-  voiceFile: string;
-  durationInFrames: number;
-  pauseAfter: number;
-  soundEffect?: string;
-  /** Optional per-segment background video override */
-  backgroundVideo?: string;
-}
-
-export interface VideoBgConfig {
-  segments: VideoBgSegment[];
-  bgm?: { src: string; volume: number };
-  /** Global background video (used when segment has no override) */
-  backgroundVideo?: string;
-  /** Video playback settings */
-  videoSettings?: {
-    loop?: boolean;
-    playbackRate?: number;
-    muted?: boolean;
-  };
-  /** Dark overlay for text readability */
-  overlay?: {
-    color?: string;
-    opacity?: number;
-    gradient?: boolean;
-  };
-  /** Ken Burns effect (slow zoom/pan on background) */
-  kenBurns?: boolean;
-  style?: {
-    quoteColor?: string;
-    highlightColor?: string;
-    quoteFontSize?: number;
-    attributionColor?: string;
-  };
-}
+export type { VideoBgConfig } from "./video-background-config";
+import { VideoBgConfig, VideoBgSegment, normalizeVideoBgConfig, videoBgPositions, globalVideoBgSource, segmentVideoBgSource } from "./video-background-config";
 
 const DEFAULT_STYLE = {
   quoteColor: "#FFFFFF",
@@ -164,7 +126,7 @@ const QuoteTextBlock: React.FC<{
           textShadow: "0 2px 20px rgba(0,0,0,0.7)",
         }}
       >
-        {renderHighlighted(segment.quoteText)}
+        {renderHighlighted(segment.quoteText ?? "")}
       </div>
 
       {/* Decorative line */}
@@ -213,7 +175,10 @@ const BackgroundVideoLayer: React.FC<{
   fps: number;
   kenBurns?: boolean;
   playbackRate?: number;
-}> = ({ src, frame, fps, kenBurns, playbackRate = 1.0 }) => {
+  trimBefore?: number;
+  muted?: boolean;
+  volume?: number;
+}> = ({ src, frame, fps, kenBurns, playbackRate = 1.0, trimBefore = 0, muted = true, volume = 1 }) => {
   const zoomScale = kenBurns
     ? interpolate(frame, [0, fps * 60], [1.0, 1.12], {
         extrapolateRight: "clamp",
@@ -230,9 +195,10 @@ const BackgroundVideoLayer: React.FC<{
     <AbsoluteFill style={{ overflow: "hidden" }}>
       <Video
         src={src}
-        startFrom={0}
+        startFrom={trimBefore}
         playbackRate={playbackRate}
-        muted
+        muted={muted}
+        volume={volume}
         style={{
           width: "100%",
           height: "100%",
@@ -266,109 +232,56 @@ const DarkOverlay: React.FC<{
   );
 };
 
-// ─── Main VideoBackgroundShort Component ─────────────────
-export const VideoBackgroundShort: React.FC<{
-  config: VideoBgConfig;
-}> = ({ config }) => {
+// Existing composition supports either the quote layout or a bounded acting stage.
+export const VideoBackgroundShort: React.FC<{ config: VideoBgConfig }> = (props) => {
+  const config = normalizeVideoBgConfig(props);
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const style = { ...DEFAULT_STYLE, ...config.style };
-
+  const { fps, width } = useVideoConfig();
+  const positions = videoBgPositions(config);
+  const active = positions.find((segment) => frame >= segment.startFrame && frame < segment.startFrame + segment.durationInFrames + segment.pauseAfter);
+  const staged = config.layout === "title-stage";
+  const stageTop = config.stage?.top ?? 560;
+  const stageHeight = width * 9 / 16;
   const videoSettings = config.videoSettings ?? {};
-  const overlaySettings = config.overlay ?? {};
-
-  // Calculate segment start positions
-  let accumulated = 0;
-  const segmentPositions = config.segments.map((s) => {
-    const start = accumulated;
-    accumulated += s.durationInFrames + s.pauseAfter;
-    return { ...s, startFrame: start };
-  });
-
-  // Find current segment
-  let currentSegment = segmentPositions[0];
-  let localFrame = 0;
-  for (const sp of segmentPositions) {
-    if (
-      frame >= sp.startFrame &&
-      frame < sp.startFrame + sp.durationInFrames + sp.pauseAfter
-    ) {
-      currentSegment = sp;
-      localFrame = frame - sp.startFrame;
-      break;
-    }
-  }
-
-  // Determine background video: per-segment override > global default
-  const bgVideoSrc = currentSegment.backgroundVideo
-    ? staticFile(currentSegment.backgroundVideo)
-    : config.backgroundVideo
-      ? staticFile(config.backgroundVideo)
-      : undefined;
-
+  const resolve = (src: string) => /^https?:\/\//.test(src) ? src : staticFile(src);
+  const style = { ...DEFAULT_STYLE, ...config.style };
+  const continuousBackground = globalVideoBgSource(config);
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      {/* Background video layer */}
-      {bgVideoSrc && (
-        <BackgroundVideoLayer
-          src={bgVideoSrc}
-          frame={frame}
-          fps={fps}
-          kenBurns={config.kenBurns ?? true}
-          playbackRate={videoSettings.playbackRate ?? 0.8}
-        />
-      )}
-
-      {/* Dark overlay for text readability */}
-      <DarkOverlay
-        color={overlaySettings.color}
-        opacity={overlaySettings.opacity ?? 1.0}
-        gradient={overlaySettings.gradient ?? true}
-      />
-
-      {/* Quote text */}
-      <QuoteTextBlock
-        segment={currentSegment}
-        localFrame={localFrame}
-        fps={fps}
-        style={style}
-      />
-
-      {/* Voice audio */}
-      {segmentPositions.map((sp) => (
-        <Sequence
-          key={sp.id}
-          from={sp.startFrame}
-          durationInFrames={sp.durationInFrames}
-        >
-          <Audio src={staticFile(`voices/${sp.voiceFile}`)} volume={1.0} />
-        </Sequence>
-      ))}
-
-      {/* Sound effects */}
-      {segmentPositions
-        .filter((sp) => sp.soundEffect)
-        .map((sp) => (
-          <Sequence
-            key={`se-${sp.id}`}
-            from={sp.startFrame}
-            durationInFrames={30}
-          >
-            <Audio
-              src={staticFile(`se/${sp.soundEffect}`)}
-              volume={0.5}
-            />
+      {continuousBackground && <BackgroundVideoLayer
+        src={resolve(continuousBackground)} frame={frame} fps={fps}
+        kenBurns={config.kenBurns ?? true} playbackRate={videoSettings.playbackRate ?? 0.8}
+        muted={videoSettings.muted ?? true}
+      />}
+      {positions.map((segment) => {
+        const src = segmentVideoBgSource(config, segment);
+        return src ? (
+          <Sequence key={`clip-${segment.id}`} from={segment.startFrame} durationInFrames={segment.durationInFrames + segment.pauseAfter}>
+            <div style={{ position: "absolute", top: staged ? stageTop : 0, left: 0, width: "100%", height: staged ? stageHeight : "100%", overflow: "hidden" }}>
+              {staged ? (
+                <Video src={resolve(src)} startFrom={segment.clip?.trimBefore ?? 0} playbackRate={videoSettings.playbackRate ?? 1} muted={videoSettings.muted ?? false} volume={segment.clip?.volume ?? 1} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              ) : (
+                <BackgroundVideoLayer src={resolve(src)} frame={frame - segment.startFrame} fps={fps} kenBurns={config.kenBurns ?? true} playbackRate={videoSettings.playbackRate ?? 0.8} trimBefore={segment.clip?.trimBefore ?? 0} muted={videoSettings.muted ?? true} volume={segment.clip?.volume ?? 1} />
+              )}
+            </div>
           </Sequence>
-        ))}
-
-      {/* BGM */}
-      {config.bgm && (
-        <Audio
-          src={staticFile(`bgm/${config.bgm.src}`)}
-          volume={config.bgm.volume}
-          loop
-        />
-      )}
+        ) : null;
+      })}
+      {staged ? (
+        <>
+          {config.title && <div style={{ position: "absolute", top: 80, left: 70, right: 70, height: Math.max(0, stageTop - 120), color: "white", textAlign: "center", fontFamily, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ fontSize: 120, fontWeight: 900, lineHeight: 1.2 }}>{config.title.text}</div>
+            {config.title.subtitle && <div style={{ fontSize: 38, marginTop: 24 }}>{config.title.subtitle}</div>}
+          </div>}
+          {(config.captions ?? []).filter((cue) => frame >= cue.startFrame && frame < cue.endFrame).map((cue, index) => <div key={index} style={{ position: "absolute", top: stageTop, height: stageHeight, left: 64, right: 120, paddingBottom: config.stage?.captionBottom ?? 64, boxSizing: "border-box", display: "flex", alignItems: "flex-end", justifyContent: "center", color: "white", fontFamily, fontSize: config.style?.quoteFontSize ?? 64, fontWeight: 900, textAlign: "center", whiteSpace: "pre-wrap", lineHeight: 1.25, textShadow: "0 3px 6px black, 2px 0 black, -2px 0 black" }}>{cue.text}</div>)}
+        </>
+      ) : <>
+        <DarkOverlay color={config.overlay?.color} opacity={config.overlay?.opacity ?? 1} gradient={config.overlay?.gradient ?? true} />
+        {active && <QuoteTextBlock segment={active} localFrame={frame - active.startFrame} fps={fps} style={style} />}
+      </>}
+      {positions.filter((segment) => segment.voiceFile).map((segment) => <Sequence key={`voice-${segment.id}`} from={segment.startFrame} durationInFrames={segment.durationInFrames}><Audio src={staticFile(`voices/${segment.voiceFile}`)} volume={1} /></Sequence>)}
+      {positions.filter((segment) => segment.soundEffect).map((segment) => <Sequence key={`se-${segment.id}`} from={segment.startFrame} durationInFrames={Math.min(30, segment.durationInFrames)}><Audio src={staticFile(`se/${segment.soundEffect}`)} volume={0.5} /></Sequence>)}
+      {config.bgm && <Audio src={staticFile(`bgm/${config.bgm.src}`)} volume={config.bgm.volume} loop />}
     </AbsoluteFill>
   );
 };
