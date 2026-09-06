@@ -1,0 +1,15 @@
+name: Remotion dependency consistency
+on:
+  pull_request:
+  push:
+    branches: [master]
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/check-remotion-versions.cjs
+      - run: node --test scripts/check-remotion-versions.test.cjs
