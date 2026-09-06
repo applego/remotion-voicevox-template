@@ -11,5 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: npm ci --ignore-scripts
       - run: node scripts/check-remotion-versions.cjs
       - run: node --test scripts/check-remotion-versions.test.cjs
+      - run: node --test scripts/video-background-config.test.cjs

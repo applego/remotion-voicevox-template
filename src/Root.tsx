@@ -5,7 +5,8 @@ import { QuoteShort } from "./QuoteShort";
 import { NarrationShort } from "./NarrationShort";
 import { KidsShort } from "./KidsShort";
 import { IrasutoyaShort, IrasutoyaConfig } from "./IrasutoyaShort";
-import { VideoBackgroundShort, VideoBgConfig } from "./VideoBackgroundShort";
+import { VideoBackgroundShort } from "./VideoBackgroundShort";
+import { normalizeVideoBgConfig, videoBgDuration } from "./video-background-config";
 import { AbatarouShort } from "./AbatarouShort";
 import { OkasanDemo } from "./OkasanDemo";
 import { scriptData } from "./data/script";
@@ -167,13 +168,15 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="VideoBackgroundShort"
         component={VideoBackgroundShort}
-        durationInFrames={quoteFrames}
+        durationInFrames={videoBgDuration(quoteConfig)}
         fps={30}
         width={1080}
         height={1920}
-        defaultProps={
-          getInputProps() as Partial<VideoBgConfig> || quoteConfig
-        }
+        defaultProps={{ config: quoteConfig }}
+        calculateMetadata={({ props }) => {
+          const config = normalizeVideoBgConfig(props);
+          return { durationInFrames: videoBgDuration(config), props: { config } };
+        }}
       />
       {/* ─── OkasanDemo: 2.5Dレイヤーアニメ (9:16) ─────────── */}
       <Composition
