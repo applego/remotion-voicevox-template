@@ -231,9 +231,15 @@ const ImageBlock: React.FC<{
   localFrame: number;
   fps: number;
 }> = ({ src, localFrame, fps }) => {
-  const opacity = interpolate(localFrame, [0, fps * 0.3], [0, 1], {
-    extrapolateRight: "clamp",
-  });
+  // ビート境界はフェードではなくカットにする。
+  //
+  // 実測 2026-09-09: 0.3秒(9フレーム)かけて入れ替えると、1フレーム間の差が
+  // 全変化量の1/9にしかならず、ffmpeg の scene スコアは 0.05〜0.10 に留まった。
+  // 模倣ゲートの閾値は 0.30 で、これは模倣元の実測にも使っている値なので下げられない
+  // （下げれば比較そのものが無効になる）。模倣元は実際にカットで切り替わっており、
+  // ここを漸進的に混ぜていたことが「90秒のスライドショー」に見えていた原因。
+  // 1フレーム目だけ 0 から入るのは、黒からの立ち上がりを残すため。
+  const opacity = localFrame <= 0 ? 0 : 1;
   // Ken Burns: subtle zoom
   const scale = interpolate(localFrame, [0, fps * 5], [1.0, 1.06], {
     extrapolateRight: "clamp",
