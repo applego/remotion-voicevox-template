@@ -18,6 +18,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import * as crypto from "crypto";
 import { execSync } from "child_process";
 
 const ROOT_DIR = process.cwd();
@@ -88,7 +89,11 @@ async function getAudioQuery(
     { method: "POST" }
   );
   if (!res.ok) throw new Error(`audio_query failed: ${res.statusText}`);
-  const query = await res.json();
+  // `fetch().json()` は unknown を返す。2026-08-20 に下の speedScale 行を足した時、
+  // ここを unknown のまま書き換えたので TS18046 で ts-node が起動時に落ちるようになり、
+  // 呼び出し側の `|| WARNING` がそれを飲み込んで、以後20日間すべてのレンダが
+  // 8/20 に合成した別エピソードの音声を使い続けた（実測 2026-09-09）。
+  const query = (await res.json()) as Record<string, unknown>;
   // The Shorts playbook builds retention on fast delivery, and channel configs say so
   // in `tools.tts.voice_speed`. Until 2026-08-20 the query went to /synthesis exactly
   // as returned, so that setting did nothing and every channel spoke at 1.0x — the
@@ -164,6 +169,18 @@ function getWavDuration(filePath: string): number {
   }
 }
 
+/** manifest の「何を・誰の声で・どの速度で喋るか」だけを内容アドレス化する。 */
+function manifestDigest(manifest: VoiceManifestEntry[]): string {
+  const canonical = manifest.map((e) => ({
+    voiceFile: e.voiceFile,
+    text: e.text,
+    provider: e.provider ?? "voicevox",
+    speakerId: e.speakerId ?? 3,
+    speedScale: e.speedScale ?? 1,
+  }));
+  return crypto.createHash("sha256").update(JSON.stringify(canonical)).digest("hex");
+}
+
 async function main() {
   if (!fs.existsSync(MANIFEST_PATH)) {
     console.error(`Manifest not found: ${MANIFEST_PATH}`);
@@ -213,6 +230,9 @@ async function main() {
   console.log(`Processing ${manifest.length} narration segments...`);
 
   const durations: Record<string, number> = {};
+  // 合成できなかった分。1本でも欠けたら音声は台本と一致しないので、
+  // 最後に throw して呼び出し側へ非ゼロで返す（従来はログだけ出して "Done!" だった）。
+  const failed: string[] = [];
 
   for (const entry of manifest) {
     const outputPath = path.join(OUTPUT_DIR, entry.voiceFile);
@@ -248,6 +268,7 @@ async function main() {
       console.log(`       -> ${duration.toFixed(2)}s, ${frames} frames`);
     } catch (e) {
       console.error(`  ERROR: ${entry.voiceFile}:`, e);
+      failed.push(`${entry.voiceFile}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
 
@@ -280,7 +301,34 @@ async function main() {
     }
   }
 
+  if (failed.length > 0) {
+    throw new Error(
+      `narration synthesis failed for ${failed.length}/${manifest.length} segment(s):\n  ` +
+        failed.join("\n  ")
+    );
+  }
+
+  // 内容アドレスの証跡。これが今の manifest と一致しない限り、レンダは通さない。
+  // mtime ではなく内容で見るのは、git checkout や touch が mtime を動かすため。
+  const stampPath = path.join(OUTPUT_DIR, "narration-voice-stamp.json");
+  fs.writeFileSync(
+    stampPath,
+    JSON.stringify(
+      {
+        manifest_sha256: manifestDigest(manifest),
+        segment_count: manifest.length,
+        generated_at: new Date().toISOString(),
+      },
+      null,
+      2
+    )
+  );
+  console.log(`Voice stamp: ${stampPath}`);
+
   console.log("\nDone!");
 }
 
-main().catch(console.error);
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

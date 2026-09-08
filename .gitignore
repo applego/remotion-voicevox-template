@@ -33,3 +33,8 @@ npm-debug.log*
 # Generated voices (optional - uncomment if you don't want to track)
 # public/voices/
 public/channel-harness-fixtures/
+
+# 音声の内容アドレス証跡。実行時に生成され、その機体の public/voices の中身を指す。
+# 追跡すると、clone しただけの環境で「証跡はあるが音声は無い」状態が緑に見える。
+# 追跡しないので、新しい checkout では必ず合成からやり直す（fail-closed）。
+public/voices/narration-voice-stamp.json
