@@ -15,7 +15,8 @@
     "editor:client": "cd editor && npm run dev",
     "editor:server": "cd editor && npm run server",
     "editor:install": "cd editor && npm install",
-    "editor:build": "cd editor && npm run build"
+    "editor:build": "cd editor && npm run build",
+    "test": "vitest run"
   },
   "dependencies": {
     "@remotion/bundler": "^4.0.0",
