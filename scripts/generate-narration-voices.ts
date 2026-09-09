@@ -116,6 +116,43 @@ async function synthesize(query: any, speakerId: number): Promise<ArrayBuffer> {
   return res.arrayBuffer();
 }
 
+/**
+ * macOS の `say` で合成する。
+ *
+ * 英語チャンネルの声はこれが記録済みの決定。channel_voice_profiles.yaml
+ * (2026-06-08, defaults.primary_provider.en) と各 recipe.yaml の
+ * `voice.provider: macos-say (from: platform)` の両方に書かれており、note には
+ * 「blueprint の phase2 は英語ネイティブ外注/AI TTS だが、いずれも spend gate の
+ * 内側なのでオーナー判断まで既定のまま」とある。つまり追加費用ゼロの既定として
+ * 選ばれていたのに、合成経路がそれを実装していなかった（実測 2026-09-09）。
+ *
+ * scripts/tts-synthesize.py の try_macos_say と同じ手順（say → AIFF → ffmpeg で WAV）。
+ * 話者は日本語 Kyoko / それ以外 Samantha で、Python 側と揃える。
+ */
+function synthesizeMacosSay(entry: VoiceManifestEntry, outputPath: string): boolean {
+  const language = (entry.language ?? "ja").toLowerCase();
+  const voice = language.startsWith("ja") ? "Kyoko" : "Samantha";
+  const aiff = outputPath.replace(/\.wav$/i, "") + ".aiff";
+  try {
+    // `say` の -r は 1 分あたりの語数。speedScale は倍率なので、既定 175 wpm へ掛ける。
+    const rate = Math.round(175 * (entry.speedScale ?? 1));
+    execSync(
+      `say -v ${voice} -r ${rate} -o ${JSON.stringify(aiff)} ${JSON.stringify(entry.text)}`,
+      { stdio: "ignore", timeout: 120_000 }
+    );
+    execSync(`ffmpeg -y -i ${JSON.stringify(aiff)} ${JSON.stringify(outputPath)}`, {
+      stdio: "ignore",
+      timeout: 60_000,
+    });
+    fs.rmSync(aiff, { force: true });
+    return fs.existsSync(outputPath) && fs.statSync(outputPath).size > 0;
+  } catch (e) {
+    console.error(`  [${entry.id}] macos-say failed:`, e instanceof Error ? e.message : e);
+    fs.rmSync(aiff, { force: true });
+    return false;
+  }
+}
+
 function isQwen3TTSAvailable(): boolean {
   try {
     execSync(
@@ -251,6 +288,18 @@ async function main() {
         generated = await synthesizeQwen3TTS(entry, outputPath);
         if (!generated) {
           console.warn(`  [${entry.id}] Qwen3-TTS failed, falling back to VOICEVOX`);
+        }
+      }
+
+      // macos-say。英語チャンネルの記録済みの既定。
+      if (!generated && provider === "macos-say") {
+        generated = synthesizeMacosSay(entry, outputPath);
+        if (!generated) {
+          // ここで VOICEVOX へ落ちると、また英語をカタカナで読む。落ちたままにする。
+          throw new Error(
+            `macos-say での合成に失敗しました (${entry.voiceFile})。` +
+              `\`say\` と ffmpeg が使えるか確認してください`
+          );
         }
       }
 
