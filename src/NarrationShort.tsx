@@ -425,6 +425,15 @@ export const NarrationShort: React.FC<{ config: NarrationConfig }> = ({
     }
   }
 
+  // 今の画が始まったフレーム。imageSrc はシーン単位（複数ビートで1枚）なので、
+  // 同じ画が続く間は起点を動かさない。ここを localFrame にすると、同じ画のまま
+  // ズームが毎ビート戻り、それが画面転換として検出される（実測 2026-09-09）。
+  let imageStartFrame = currentSegment.startFrame;
+  for (let i = currentIdx - 1; i >= 0; i--) {
+    if (segmentPositions[i].imageSrc !== currentSegment.imageSrc) break;
+    imageStartFrame = segmentPositions[i].startFrame;
+  }
+
   // Scenes are on by default: every NarrationShort channel had the same
   // one-static-frame problem. A channel that deliberately wants a single
   // ground can say so with `style.sceneBackgrounds: false`, and then the old
@@ -457,7 +466,13 @@ export const NarrationShort: React.FC<{ config: NarrationConfig }> = ({
       {hasImage && currentSegment.imageSrc && (
         <ImageBlock
           src={currentSegment.imageSrc}
-          localFrame={localFrame}
+          // 画が変わってからの経過フレーム。**セグメント単位ではない。**
+          //
+          // imageSrc はシーン単位（複数ビートで1枚）なのに localFrame を渡していたため、
+          // 同じ画のままズームが毎ビート 1.06 → 1.0 に戻り、それが画面転換として
+          // 検出されていた（実測 2026-09-09: 15セグメントの ep04 は3シーンしか無いのに
+          // 6.70回/分。6セグメントの回は 3.79〜4.57回/分 で、差はビート数に比例していた）。
+          localFrame={frame - imageStartFrame}
           fps={fps}
         />
       )}
