@@ -43,6 +43,8 @@ interface VoiceManifestEntry {
   refAudio?: string;   // Qwen3-TTS: reference audio path for voice cloning
   refText?: string;    // Qwen3-TTS: reference audio transcript
   speedScale?: number; // VOICEVOX narration speed from tools.tts.voice_speed
+  /** チャンネルの言語。日本語専用の声で他言語を読ませないために使う。 */
+  language?: string;
 }
 
 function sleep(ms: number): Promise<void> {
@@ -254,6 +256,24 @@ async function main() {
 
       // Use VOICEVOX (primary or fallback)
       if (!generated) {
+        // VOICEVOX は日本語専用。英語を渡すとカタカナ日本語として読む。
+        //
+        // 実測 2026-09-09: "Japan has 5 million vending machines..." が
+        // ジャパンハスゴミリオンベンディングマシインズ… になった。英語話者には
+        // 通じないので、動画として成立しない。fallback は言語を見ていなかったので、
+        // qwen3 が使えない時に承認済みの英語チャンネルがこの状態で出力されていた。
+        //
+        // 黙って劣化させるより落とす。呼び出し側は失敗を非ゼロで受け取り、
+        // check_narration_freshness が古い音声の再利用も止める。
+        const language = (entry.language ?? "ja").toLowerCase();
+        if (!language.startsWith("ja")) {
+          throw new Error(
+            `VOICEVOX は日本語専用なので language=${entry.language} のテキストを合成できません` +
+              ` (${entry.voiceFile})。このチャンネルの声を` +
+              ` companies/voice-clone-company/config/models.yaml の channel_voice_mapping へ` +
+              ` 登録し、その provider を使えるようにしてください`
+          );
+        }
         const speakerId = entry.speakerId ?? 3;
         const query = await getAudioQuery(entry.text, speakerId, entry.speedScale);
         const audio = await synthesize(query, speakerId);
